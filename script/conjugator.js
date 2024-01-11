@@ -4,7 +4,7 @@ export function conjugator(inputVerb) {
   const foundVerb = data.verbs.find((verb) => verb.infinitive === inputVerb);
   if (foundVerb) {
     let conjugatedBox = `<div id="conjugated_box">
-      <h1 id="infinitive">${foundVerb.infinitive}</h1>
+      <div id="infinitive"><h1>${foundVerb.infinitive}</h1></div>
 
       <div class="conjugated_row">
         <p class="pronoun_column">ich</p>

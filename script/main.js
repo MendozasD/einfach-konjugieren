@@ -1,5 +1,6 @@
 import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
+import { saveVerb } from "/script/save_verb.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -24,8 +25,23 @@ document.querySelector("#app").innerHTML = `
 
 let verb = document.querySelector("#verb_input");
 const searchBtn = document.querySelector("#search_btn");
+const saveBtn = document.querySelector("#save_btn");
 
 searchBtn.addEventListener("click", () => {
   conjugator(verb.value);
   document.querySelector("#save_btn").disabled = false;
+});
+
+saveBtn.addEventListener("click", () => {
+  const currentVerb = document.querySelector("#" + verb.value);
+  if (currentVerb) {
+    saveBtn.style.backgroundColor = "red";
+    saveBtn.innerHTML = "Schon gespeichern";
+    setTimeout(function () {
+      saveBtn.innerHTML = "Speichern";
+      saveBtn.style.backgroundColor = "gray";
+    }, 1000);
+  } else {
+    saveVerb();
+  }
 });

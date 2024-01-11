@@ -22,17 +22,25 @@
   h1 {
     font-family: var(--panchang);
   }
+  .title {
+    text-align: center;
+  }
+
+  .pan_font {
+    font-family: var(--panchang);
+  }
 }
 
 #container {
   position: absolute;
+  inset: 2rem;
   gap: 10px;
   display: grid;
-  top: 10px;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
 }
+
+// ======================================================
+// ================= CONJUGATOR SECTION =================
+// ======================================================
 
 #conjugator {
   height: 100vh;
@@ -57,13 +65,40 @@
   }
 }
 
-.title {
-  text-align: center;
+#conjugator_result #conjugated_box {
+  margin: 4rem 0 0 0;
+  #infinitive {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    h1 {
+      margin: 0 auto;
+      background-color: gray;
+      border-radius: 30px;
+      width: fit-content;
+      padding: 2px 20px;
+    }
+  }
+  .conjugated_row {
+    display: flex;
+    font-size: 1.3rem;
+    gap: 10px;
+    p.pronoun_column {
+      text-align: right;
+      width: 45%;
+      font-style: italic;
+      font-weight: 100;
+    }
+    p.conjugated_column {
+      width: 55%;
+      font-weight: 500;
+    }
+  }
 }
 
-.pan_font {
-  font-family: var(--panchang);
-}
+// ======================================================
+// ================= LIST OF VERBS ======================
+// ======================================================
 
 #conjugated_list {
   height: calc(100svh - 10px);
