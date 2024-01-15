@@ -18,6 +18,7 @@
 }
 
 * {
+  scroll-behavior: smooth;
   margin: 0;
   h1 {
     font-family: var(--panchang);
@@ -47,9 +48,20 @@
   #input_field {
     width: 100%;
     text-align: center;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
     input {
       font-size: 1.3rem;
       width: 80%;
+      border-radius: 15px;
+    }
+    #search_btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      font-size: 2rem;
+      font-weight: 900;
     }
   }
   .center_parent {
@@ -63,35 +75,53 @@
     border-radius: 30px;
     padding: 5px 10px;
   }
+  #verb_input {
+    border: none;
+    height: 3rem;
+    padding: 0 10px;
+    font-family: var(--panchang);
+  }
 }
 
-#conjugator_result #conjugated_box {
-  margin: 4rem 0 0 0;
-  #infinitive {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 1.2rem;
-    h1 {
-      margin: 0 auto;
-      background-color: gray;
-      border-radius: 30px;
-      width: fit-content;
-      padding: 2px 20px;
+#conjugator_result {
+  margin: 5rem 0;
+  width: fit-content;
+  margin: 0 auto;
+  #conjugated_box {
+    background-image: url("/assets/noise.png");
+    background-color: #c2c1bd;
+    border-radius: 10px;
+    padding: 10px 15px 60px;
+    color: black;
+    margin: 4rem 0 0 0;
+    box-shadow: rgba(187, 187, 209, 0.1) 0px 4px 16px,
+      rgba(210, 210, 230, 0.1) 0px 8px 24px,
+      rgba(240, 240, 248, 0.1) 0px 16px 56px;
+    #infinitive {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      h1 {
+        margin: 0 auto;
+        width: fit-content;
+        padding: 2px 20px;
+        text-decoration: underline solid gray 5px;
+      }
     }
-  }
-  .conjugated_row {
-    display: flex;
-    font-size: 1.3rem;
-    gap: 10px;
-    p.pronoun_column {
-      text-align: right;
-      width: 45%;
-      font-style: italic;
-      font-weight: 100;
-    }
-    p.conjugated_column {
-      width: 55%;
-      font-weight: 500;
+    .conjugated_row {
+      display: flex;
+      font-size: 1.3rem;
+      gap: 10px;
+      p.pronoun_column {
+        text-align: right;
+        width: 45%;
+        font-style: italic;
+        font-weight: 100;
+      }
+      p.conjugated_column {
+        width: 55%;
+        font-weight: 500;
+      }
     }
   }
 }
@@ -102,4 +132,34 @@
 
 #conjugated_list {
   height: calc(100svh - 10px);
+}
+
+#conjugated_table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  .enlisted_verb {
+    margin: 5px;
+    width: 250px;
+    border: 1px white solid;
+    border-radius: 5%;
+    padding: 10px 0;
+    .enlisted_head {
+      text-align: center;
+    }
+  }
+  .enlisted_row {
+    display: flex;
+    gap: 10px;
+    & p {
+      width: 50%;
+    }
+    p:first-child {
+      text-align: end;
+      font-style: italic;
+    }
+    p:last-child {
+      font-weight: 900;
+    }
+  }
 }

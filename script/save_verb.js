@@ -1,5 +1,5 @@
 export function saveVerb() {
-  const enlistedVerbSection = document.getElementById("conjugated_list");
+  const enlistedVerbSection = document.getElementById("conjugated_table");
   const verbo = document.querySelector("#conjugated_box");
 
   // Getting verb's infinitve

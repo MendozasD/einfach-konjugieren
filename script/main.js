@@ -8,7 +8,7 @@ document.querySelector("#app").innerHTML = `
       <h1 class="title">Einfach Konjugieren</h1>
       <section id="input_field">
         <input type="text" id="verb_input" placeholder="Wort eingeben" />
-        <button id="search_btn">los</button>
+        <button id="search_btn">></button>
         </section>
       <section id="conjugator_result">
       </section>
@@ -19,6 +19,7 @@ document.querySelector("#app").innerHTML = `
 
     <div id="conjugated_list">
       <h1 class="title">Konjugierte Verben</h1>
+      <section id="conjugated_table"></section>
     </div>
   </div>
 `;
