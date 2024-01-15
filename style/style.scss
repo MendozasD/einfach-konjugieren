@@ -81,6 +81,38 @@
     padding: 0 10px;
     font-family: var(--panchang);
   }
+  #bounce_btn {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    border: white 1px solid;
+    padding: 10px;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-family: var(--panchang);
+    font-size: 1.3rem;
+    transition: ease 500ms all;
+    text-decoration: none;
+    color: white;
+    &:visited {
+      color: white;
+    }
+
+    // Bounce Animation Keyframe
+    animation: bouncy 0.8s infinite;
+    animation-direction: alternate;
+  }
+  #conjugator_error {
+    position: absolute;
+    inset: 45% 0;
+    font-size: 2rem;
+    text-align: center;
+    font-family: var(--panchang);
+  }
 }
 
 #conjugator_result {
@@ -94,7 +126,7 @@
     padding: 10px 15px 60px;
     color: black;
     margin: 4rem 0 0 0;
-    box-shadow: rgba(187, 187, 209, 0.1) 0px 4px 16px,
+    box-shadow: rgba(187, 187, 209, 0.1) 0px 0px 16px 20px,
       rgba(210, 210, 230, 0.1) 0px 8px 24px,
       rgba(240, 240, 248, 0.1) 0px 16px 56px;
     #infinitive {
@@ -123,6 +155,15 @@
         font-weight: 500;
       }
     }
+  }
+}
+
+@keyframes bouncy {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-20%);
   }
 }
 

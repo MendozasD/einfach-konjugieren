@@ -3,7 +3,7 @@ import data from "/data/verbs_database.json";
 export function conjugator(inputVerb) {
   const foundVerb = data.verbs.find((verb) => verb.infinitive === inputVerb);
   if (foundVerb) {
-    let conjugatedBox = `<div id="conjugated_box">
+    let conjugatedBox = `<div id="conjugated_box" class="animate__animated animate__fadeInUp">
       <div id="infinitive"><h1>${foundVerb.infinitive}</h1></div>
 
       <div class="conjugated_row">
@@ -42,6 +42,6 @@ export function conjugator(inputVerb) {
   } else {
     document.querySelector(
       "#conjugator_result"
-    ).innerHTML = `Verb '${inputVerb}' nitch gefunden.`;
+    ).innerHTML = `<div id="conjugator_error">Verb „${inputVerb}“ nicht gefunden.</div>`;
   }
 }

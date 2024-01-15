@@ -1,6 +1,8 @@
+import "animate.css";
 import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
 import { saveVerb } from "/script/save_verb.js";
+import { counter } from "/script/counter.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -14,6 +16,7 @@ document.querySelector("#app").innerHTML = `
       </section>
       <section class="center_parent">
         <button id="save_btn" disabled="true" class="pan_font">Speichern</button>
+        <a href="#conjugated_list" id="bounce_btn">0</a>
       </section>
     </div>
 
@@ -44,5 +47,6 @@ saveBtn.addEventListener("click", () => {
     }, 1000);
   } else {
     saveVerb();
+    counter(document.getElementById("bounce_btn"));
   }
 });
