@@ -30,6 +30,7 @@ document.querySelector("#app").innerHTML = `
 let verb = document.querySelector("#verb_input");
 const searchBtn = document.querySelector("#search_btn");
 const saveBtn = document.querySelector("#save_btn");
+const bouncyBtn = document.getElementById("bounce_btn");
 
 searchBtn.addEventListener("click", () => {
   conjugator(verb.value);
@@ -39,14 +40,22 @@ searchBtn.addEventListener("click", () => {
 saveBtn.addEventListener("click", () => {
   const currentVerb = document.querySelector("#" + verb.value);
   if (currentVerb) {
-    saveBtn.style.backgroundColor = "red";
+    saveBtn.style.backgroundColor = "var(--red)";
     saveBtn.innerHTML = "Schon gespeichern";
+    bouncyBtn.style.backgroundColor = "var(--red)";
     setTimeout(function () {
       saveBtn.innerHTML = "Speichern";
       saveBtn.style.backgroundColor = "gray";
-    }, 1000);
+      bouncyBtn.style.backgroundColor = "transparent";
+    }, 1200);
   } else {
     saveVerb();
-    counter(document.getElementById("bounce_btn"));
+    counter(bouncyBtn);
+
+    // Styling changes
+    saveBtn.style.backgroundColor = "var(--green)";
+    setTimeout(function () {
+      saveBtn.style.backgroundColor = "gray";
+    }, 1000);
   }
 });

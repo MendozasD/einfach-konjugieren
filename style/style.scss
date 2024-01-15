@@ -1,6 +1,8 @@
 :root {
   --panchang: "Panchang", sans-serif;
   --orange: #ff5c36;
+  --red: #ff2c55;
+  --green: #89fc00;
   font-family: "Satoshi", sans-serif;
 
   // DEFAULT VITE STYLING
@@ -74,6 +76,7 @@
     font-size: 1.2rem;
     border-radius: 30px;
     padding: 5px 10px;
+    transition: ease 500ms all;
   }
   #verb_input {
     border: none;
@@ -120,6 +123,7 @@
   width: fit-content;
   margin: 0 auto;
   #conjugated_box {
+    transition: ease 200ms box-shadow;
     background-image: url("/assets/noise.png");
     background-color: #c2c1bd;
     border-radius: 10px;
@@ -153,6 +157,15 @@
       p.conjugated_column {
         width: 55%;
         font-weight: 500;
+      }
+    }
+    &:hover {
+      box-shadow: var(--orange) 0px 0px 25px;
+      #infinitive {
+        h1 {
+          transition: ease 200ms all;
+          text-decoration: underline solid var(--orange) 5px;
+        }
       }
     }
   }

@@ -42,6 +42,6 @@ export function conjugator(inputVerb) {
   } else {
     document.querySelector(
       "#conjugator_result"
-    ).innerHTML = `<div id="conjugator_error">Verb „${inputVerb}“ nicht gefunden.</div>`;
+    ).innerHTML = `<div id="conjugator_error" class="animate__animated animate__fadeInUp">Verb „${inputVerb}“ nicht gefunden.</div>`;
   }
 }
