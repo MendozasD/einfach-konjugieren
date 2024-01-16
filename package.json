@@ -17,6 +17,8 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
-    "animate.css": "^4.1.1"
+    "animate.css": "^4.1.1",
+    "cors": "^2.8.5",
+    "reverso-api": "^2.22.7"
   }
 }
