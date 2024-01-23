@@ -3,7 +3,6 @@ import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
 import { saveVerb } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
-import { getContext } from "/script/reverso.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -35,7 +34,7 @@ const bouncyBtn = document.getElementById("bounce_btn");
 
 searchBtn.addEventListener("click", () => {
   conjugator(verb.value);
-  document.querySelector("#save_btn").disabled = false;
+  saveBtn.disabled = false;
 });
 
 saveBtn.addEventListener("click", () => {
@@ -46,7 +45,7 @@ saveBtn.addEventListener("click", () => {
     bouncyBtn.style.backgroundColor = "var(--red)";
     setTimeout(function () {
       saveBtn.innerHTML = "Speichern";
-      saveBtn.style.backgroundColor = "gray";
+      saveBtn.style.backgroundColor = "white";
       bouncyBtn.style.backgroundColor = "transparent";
     }, 1200);
   } else {
@@ -56,9 +55,7 @@ saveBtn.addEventListener("click", () => {
     // Styling changes
     saveBtn.style.backgroundColor = "var(--green)";
     setTimeout(function () {
-      saveBtn.style.backgroundColor = "gray";
+      saveBtn.style.backgroundColor = "white";
     }, 1000);
   }
 });
-
-getContext("lachen");

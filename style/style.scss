@@ -144,6 +144,15 @@
         width: fit-content;
         padding: 2px 20px;
         text-decoration: underline solid gray 5px;
+        border: solid 1px;
+        border-radius: 50%;
+        padding: 11px 29px;
+      }
+      &:hover {
+        h1 {
+          transition: ease 200ms all;
+          text-decoration: underline solid var(--orange) 5px;
+        }
       }
     }
     .conjugated_row {
@@ -163,12 +172,6 @@
     }
     &:hover {
       box-shadow: var(--orange) 0px 0px 25px;
-      #infinitive {
-        h1 {
-          transition: ease 200ms all;
-          text-decoration: underline solid var(--orange) 5px;
-        }
-      }
     }
   }
 }
@@ -195,13 +198,32 @@
   flex-wrap: wrap;
   justify-content: center;
   .enlisted_verb {
+    position: relative;
     margin: 5px;
     width: 250px;
     border: 1px white solid;
     border-radius: 5%;
     padding: 10px 0;
+    transition: ease 300ms box-shadow;
+    &:hover {
+      box-shadow: 0 0 20px white;
+    }
     .enlisted_head {
       text-align: center;
+    }
+    .delete_btn {
+      cursor: pointer;
+      position: absolute;
+      border: solid 1px;
+      border-radius: 50%;
+      padding: 5px;
+      bottom: 5px;
+      left: 5px;
+      transition: ease 400ms all;
+      &:hover {
+        background-color: white;
+        color: black;
+      }
     }
   }
   .enlisted_row {
@@ -218,4 +240,8 @@
       font-weight: 900;
     }
   }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" -25, "opsz" 48;
 }
