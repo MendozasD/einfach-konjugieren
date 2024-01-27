@@ -47,9 +47,10 @@
       <h1 class="title">Einfach Konjugieren</h1>
       <section id="input_field">
         <input type="text" id="verb_input" placeholder="Wort eingeben" />
-        <button id="search_btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-      </svg>
+      <button id="search_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
       </button>
         </section>
       <section id="conjugator_result">
@@ -65,4 +66,4 @@
       <section id="conjugated_table"></section>
     </div>
   </div>
-`;let u=document.querySelector("#verb_input");const v=document.querySelector("#search_btn"),c=document.querySelector("#save_btn"),a=document.getElementById("bounce_btn");v.addEventListener("click",()=>{f(u.value.toLowerCase()),c.disabled=!1});c.addEventListener("click",()=>{document.querySelector("#"+u.value)?(c.style.backgroundColor="var(--red)",c.innerHTML="Schon gespeichern",a.style.backgroundColor="var(--red)",setTimeout(function(){c.innerHTML="Speichern",c.style.backgroundColor="white",a.style.backgroundColor="transparent"},1200)):(d(),l(a),c.style.backgroundColor="var(--green)",setTimeout(function(){c.style.backgroundColor="white"},1e3))});
+`;let u=document.querySelector("#verb_input");const v=document.querySelector("#search_btn"),c=document.querySelector("#save_btn"),a=document.getElementById("bounce_btn");v.addEventListener("click",()=>{f(u.value.toLowerCase()),c.disabled=!1});c.addEventListener("click",()=>{document.querySelector("#"+u.value.toLowerCase())?(c.style.backgroundColor="var(--red)",c.innerHTML="Schon gespeichern",a.style.backgroundColor="var(--red)",setTimeout(function(){c.innerHTML="Speichern",c.style.backgroundColor="white",a.style.backgroundColor="transparent"},1200)):(d(),l(a),c.style.backgroundColor="var(--green)",setTimeout(function(){c.style.backgroundColor="white"},1e3))});
