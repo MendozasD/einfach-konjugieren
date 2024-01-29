@@ -39,6 +39,21 @@
   inset: 2rem;
   gap: 10px;
   display: grid;
+  #made_by {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    font-size: 0.8rem;
+    font-family: var(--panchang);
+    a {
+      color: white;
+      text-decoration: underline;
+      &:visited {
+        color: white;
+      }
+    }
+  }
 }
 
 // ======================================================
@@ -51,9 +66,10 @@
     display: flex;
     position: relative;
     justify-content: center;
-    width: 100%;
     text-align: center;
     white-space: nowrap;
+    width: clamp(326px, 80%, 800px);
+    margin: auto;
     input {
       font-size: 1.3rem;
       width: 100%;
@@ -182,6 +198,11 @@
     }
     &:hover {
       box-shadow: var(--orange) 0px 0px 25px;
+    }
+    .particletxt_class {
+      font-size: 1.2rem;
+      font-weight: 100;
+      font-style: italic;
     }
   }
 }

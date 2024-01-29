@@ -26,6 +26,7 @@ document.querySelector("#app").innerHTML = `
       <h1 class="title">Konjugierte Verben</h1>
       <section id="conjugated_table"></section>
     </div>
+    <footer id="made_by">Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></footer>
   </div>
 `;
 
