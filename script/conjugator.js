@@ -7,12 +7,10 @@ export function conjugator(inputVerb) {
   let particletxt = "";
 
   if (foundVerb) {
-    if (foundVerb.conjugations.particletxt == "") {
-      console.log("undefined");
-    } else {
-      particletxt = foundVerb.conjugations.particletxt;
-      console.log("defined: ", particletxt);
-    }
+    // Check if particletxt is defined to print it
+    foundVerb.conjugations.particletxt == ""
+      ? ""
+      : (particletxt = foundVerb.conjugations.particletxt);
 
     let conjugatedBox = `<div id="conjugated_box" class="animate__animated animate__fadeInUp">
       <div id="infinitive"><h1>${foundVerb.infinitive}</h1></div>
