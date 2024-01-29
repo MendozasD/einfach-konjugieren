@@ -9,7 +9,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  // color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -48,24 +48,31 @@
 #conjugator {
   height: 100vh;
   #input_field {
+    display: flex;
+    position: relative;
+    justify-content: center;
     width: 100%;
     text-align: center;
     white-space: nowrap;
-    display: flex;
-    justify-content: center;
     input {
       font-size: 1.3rem;
-      width: 80%;
+      width: 100%;
       border-radius: 15px;
     }
     #search_btn {
-      display: flex;
-      align-items: center;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      font-size: 2rem;
+      position: absolute;
+      cursor: pointer;
+      color: black;
+      font-size: 3rem;
+      right: 15px;
       font-weight: 900;
+      border-radius: 50%;
+      transition: ease 200ms all;
+      &:active {
+        transform: scale(0.9);
+        background-color: black;
+        color: white;
+      }
     }
   }
   .center_parent {

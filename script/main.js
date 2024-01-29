@@ -10,12 +10,10 @@ document.querySelector("#app").innerHTML = `
       <h1 class="title">Einfach Konjugieren</h1>
       <section id="input_field">
         <input type="text" id="verb_input" placeholder="Wort eingeben" />
-      <button id="search_btn">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-        </svg>
-      </button>
-        </section>
+        <span id="search_btn" class="material-symbols-outlined">
+          arrow_circle_right
+        </span>
+      </section>
       <section id="conjugator_result">
       </section>
       <section class="center_parent">
@@ -31,16 +29,27 @@ document.querySelector("#app").innerHTML = `
   </div>
 `;
 
+// Variables
 let verb = document.querySelector("#verb_input");
 const searchBtn = document.querySelector("#search_btn");
 const saveBtn = document.querySelector("#save_btn");
 const bouncyBtn = document.getElementById("bounce_btn");
 
+// Look for a verb when clicking the search button
 searchBtn.addEventListener("click", () => {
   conjugator(verb.value.toLowerCase());
   saveBtn.disabled = false;
 });
 
+// Look for a verb when pressing enter
+verb.addEventListener("keyup", function (e) {
+  if (e.keyCode === 13) {
+    conjugator(verb.value.toLowerCase());
+    saveBtn.disabled = false;
+  }
+});
+
+// Save a verb when clicking the save button
 saveBtn.addEventListener("click", () => {
   const currentVerb = document.querySelector("#" + verb.value.toLowerCase());
   if (currentVerb) {
