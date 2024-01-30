@@ -2,7 +2,7 @@
   "name": "conjugation-ii",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://mendozasd.github.io/congugation_present_app/",
+  "homepage": "https://sitzpinkler.ch/",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
