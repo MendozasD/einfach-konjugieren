@@ -3,6 +3,7 @@ import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
 import { saveVerb } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
+import { getContext } from "/script/reverso.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -73,3 +74,5 @@ saveBtn.addEventListener("click", () => {
     }, 1000);
   }
 });
+
+getContext("sein");
