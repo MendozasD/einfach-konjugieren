@@ -14,7 +14,7 @@
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "sass": "^1.69.7",
-    "vite": "^5.0.8"
+    "vite": "^7.2.6"
   },
   "dependencies": {
     "animate.css": "^4.1.1",

@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    container_name: einfach_konjugieren
+    restart: unless-stopped
+    networks:
+      - caddy_network
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  caddy_network:
+    external: true
