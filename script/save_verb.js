@@ -1,31 +1,35 @@
 import { counter } from "./counter.js";
+import { removeSavedVerb } from "./state.js";
+import { TENSE_LABELS, PERSON_ORDER, PERSON_LABELS } from "./api.js";
 
-export function saveVerb() {
+export function saveVerb(infinitive, tense, conjugations) {
   const bouncyBtn = document.getElementById("bounce_btn");
-  const enlistedVerbSection = document.getElementById("conjugated_table");
-  const verbo = document.querySelector("#conjugated_box");
+  const table = document.getElementById("conjugated_table");
 
-  // Getting verb's infinitve
-  const currentVerb = verbo.children[0].children[0].innerHTML;
+  const rows = PERSON_ORDER.map(
+    (p) => `
+    <div class="enlisted_row">
+      <p>${PERSON_LABELS[p]}</p>
+      <p>${conjugations[p]}</p>
+    </div>`
+  ).join("");
 
-  let conjugatedElement = `<section id="${currentVerb}" class="enlisted_verb">
-    <h1 class="enlisted_head">${currentVerb}</h1>
-    <div class="enlisted_row"><p>ich</p><p>${verbo.children[1].children[1].innerHTML}</p></div>
-    <div class="enlisted_row"><p>du</p><p>${verbo.children[2].children[1].innerHTML}</p></div>
-    <div class="enlisted_row"><p>er/sie/es</p><p>${verbo.children[3].children[1].innerHTML}</p></div>
-    <div class="enlisted_row"><p>wir</p><p>${verbo.children[4].children[1].innerHTML}</p></div>
-    <div class="enlisted_row"><p>ihr</p><p>${verbo.children[5].children[1].innerHTML}</p></div>
-    <div class="enlisted_row"><p>sie/Sie</p><p>${verbo.children[6].children[1].innerHTML}</p></div>
+  const card = document.createElement("section");
+  card.className = "enlisted_verb";
+  card.dataset.infinitive = infinitive;
+  card.dataset.tense = tense;
+  card.innerHTML = `
+    <h1 class="enlisted_head">${infinitive}</h1>
+    <span class="enlisted_tense">${TENSE_LABELS[tense]}</span>
+    ${rows}
     <span class="material-symbols-outlined delete_btn">delete</span>
-  </section>`;
-  enlistedVerbSection.innerHTML += conjugatedElement;
+  `;
 
-  // Delete button
-  const deleteBtn = document.querySelectorAll(".delete_btn");
-  deleteBtn.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      btn.parentElement.remove();
-      counter(bouncyBtn);
-    });
+  card.querySelector(".delete_btn").addEventListener("click", () => {
+    removeSavedVerb(infinitive, tense);
+    card.remove();
+    counter(bouncyBtn);
   });
+
+  table.appendChild(card);
 }
