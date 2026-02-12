@@ -53,7 +53,7 @@
 #conjugator {
   min-height: 100vh;
   position: relative;
-  padding-bottom: 80px;
+  padding-bottom: 2rem;
 
   #input_field {
     display: flex;
@@ -87,53 +87,11 @@
     }
   }
 
-  .center_parent {
-    position: fixed;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 10;
-  }
-
-  #save_btn {
-    color: black;
-    font-size: 1.2rem;
-    border-radius: 30px;
-    padding: 5px 10px;
-    transition: ease 500ms all;
-  }
-
   #verb_input {
     border: none;
     height: 3rem;
     padding: 0 10px;
     font-family: var(--panchang);
-  }
-
-  #bounce_btn {
-    display: inline-flex;
-    position: fixed;
-    bottom: 10px;
-    right: 20px;
-    justify-content: center;
-    align-items: center;
-    border: white 1px solid;
-    padding: 10px;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    font-family: var(--panchang);
-    font-size: 1.3rem;
-    transition: ease 500ms all;
-    text-decoration: none;
-    color: white;
-    z-index: 10;
-    background: #242424;
-    &:visited {
-      color: white;
-    }
-    animation: bouncy 0.8s infinite alternate;
   }
 
   #conjugator_error {
@@ -231,10 +189,11 @@
   background-image: url("/assets/noise.png");
   background-color: #c2c1bd;
   border-radius: 12px;
-  padding: 16px 20px 20px;
+  padding: 16px 20px 56px;
   color: black;
   transition: box-shadow 200ms ease;
   box-shadow: rgba(187, 187, 209, 0.1) 0px 0px 8px 4px;
+  position: relative;
 
   &:hover {
     box-shadow: var(--orange) 0px 0px 20px;
@@ -277,21 +236,131 @@
 }
 
 // ======================================================
-// ================= CONJUGATOR RESULT (legacy compat) ==
+// ================= PER-CARD SAVE BUTTON ===============
+// ======================================================
+
+.card_save_btn {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
+
+  .material-symbols-outlined {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: var(--orange);
+    color: white;
+    border-color: var(--orange);
+  }
+
+  &.saved {
+    background: var(--green);
+    color: black;
+    border-color: var(--green);
+    pointer-events: none;
+  }
+
+  &.duplicate {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+    pointer-events: none;
+  }
+}
+
+// ======================================================
+// ================= SECTION DIVIDER ====================
+// ======================================================
+
+#section_divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.2) 80%,
+      transparent
+    );
+  }
+}
+
+#bounce_btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-decoration: none;
+  color: white;
+  background: #242424;
+  padding: 8px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  transition: all 300ms ease;
+  z-index: 1;
+
+  &:visited {
+    color: white;
+  }
+
+  &:hover {
+    border-color: var(--orange);
+    box-shadow: 0 0 15px rgba(255, 92, 54, 0.3);
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.5rem;
+    animation: bounce-arrow 1.2s ease-in-out infinite;
+  }
+
+  #bounce_count {
+    font-family: var(--panchang);
+    font-size: 1rem;
+  }
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+// ======================================================
+// ================= CONJUGATOR RESULT ==================
 // ======================================================
 
 #conjugator_result {
   margin: 0 auto;
   max-width: 1200px;
-}
-
-@keyframes bouncy {
-  from {
-    transform: translateY(0%);
-  }
-  to {
-    transform: translateY(-20%);
-  }
 }
 
 // ======================================================

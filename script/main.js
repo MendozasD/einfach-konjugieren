@@ -1,15 +1,7 @@
 import "animate.css";
 import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
-import { saveVerb } from "/script/save_verb.js";
-import { counter } from "/script/counter.js";
-import { getState, addSavedVerb } from "/script/state.js";
-import {
-  INDICATIVE_TENSES,
-  TENSE_LABELS,
-  getIndicativeTenses,
-  fetchVerbList,
-} from "/script/api.js";
+import { fetchVerbList } from "/script/api.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -24,10 +16,13 @@ document.querySelector("#app").innerHTML = `
       </section>
       <section id="conjugator_result">
       </section>
-      <section class="center_parent">
-        <button id="save_btn" disabled="true" class="pan_font">Speichern</button>
-        <a href="#conjugated_list" id="bounce_btn">0</a>
-      </section>
+    </div>
+
+    <div id="section_divider">
+      <a href="#conjugated_list" id="bounce_btn">
+        <span class="material-symbols-outlined">expand_more</span>
+        <span id="bounce_count">0</span>
+      </a>
     </div>
 
     <div id="conjugated_list">
@@ -51,8 +46,6 @@ document.querySelector("#app").innerHTML = `
 // Elements
 const verbInput = document.querySelector("#verb_input");
 const searchBtn = document.querySelector("#search_btn");
-const saveBtn = document.querySelector("#save_btn");
-const bouncyBtn = document.getElementById("bounce_btn");
 const pdfBtn = document.getElementById("pdf_btn");
 const wallpaperBtn = document.getElementById("wallpaper_btn");
 const autocompleteList = document.getElementById("autocomplete_list");
@@ -128,55 +121,13 @@ async function doSearch() {
   const input = verbInput.value.toLowerCase().trim();
   if (!input) return;
   autocompleteList.classList.remove("visible");
-  saveBtn.disabled = true;
-  const found = await conjugator(input);
-  if (found) saveBtn.disabled = false;
+  await conjugator(input);
 }
 
 searchBtn.addEventListener("click", doSearch);
 
 verbInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter" && acSelected < 0) doSearch();
-});
-
-// Save all tenses at once
-saveBtn.addEventListener("click", () => {
-  const { currentVerb, currentData } = getState();
-  if (!currentVerb || !currentData) return;
-
-  const indicative = getIndicativeTenses(currentData);
-  let anyAdded = false;
-  let anyDuplicate = false;
-
-  for (const tense of INDICATIVE_TENSES) {
-    if (!indicative[tense]) continue;
-    const added = addSavedVerb(currentVerb, tense, indicative[tense]);
-    if (added) {
-      saveVerb(currentVerb, tense, indicative[tense]);
-      anyAdded = true;
-    } else {
-      anyDuplicate = true;
-    }
-  }
-
-  if (anyAdded) {
-    counter(bouncyBtn);
-    saveBtn.style.backgroundColor = "var(--green)";
-    setTimeout(() => {
-      saveBtn.style.backgroundColor = "white";
-    }, 1000);
-  }
-
-  if (!anyAdded && anyDuplicate) {
-    saveBtn.style.backgroundColor = "var(--red)";
-    saveBtn.innerHTML = "Schon gespeichert";
-    bouncyBtn.style.backgroundColor = "var(--red)";
-    setTimeout(() => {
-      saveBtn.innerHTML = "Speichern";
-      saveBtn.style.backgroundColor = "white";
-      bouncyBtn.style.backgroundColor = "transparent";
-    }, 1200);
-  }
 });
 
 // PDF download

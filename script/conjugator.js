@@ -11,7 +11,10 @@ import {
   setCurrentTense,
   setCurrentData,
   getState,
+  addSavedVerb,
 } from "/script/state.js";
+import { saveVerb } from "/script/save_verb.js";
+import { counter } from "/script/counter.js";
 
 function renderLoading() {
   document.querySelector("#conjugator_result").innerHTML = `
@@ -32,11 +35,15 @@ function renderAllTenses(verb, indicative) {
     ).join("");
 
     return `
-      <div class="tense_card animate__animated animate__fadeInUp">
+      <div class="tense_card animate__animated animate__fadeInUp" data-tense="${tense}">
         <div class="tense_card_header">
           <h2>${TENSE_LABELS[tense]}</h2>
         </div>
         ${rows}
+        <button class="card_save_btn pan_font" data-tense="${tense}">
+          <span class="material-symbols-outlined">bookmark</span>
+          Speichern
+        </button>
       </div>`;
   }).join("");
 
@@ -54,6 +61,32 @@ function renderError(verb) {
     </div>`;
 }
 
+function attachSaveHandlers(verb, indicative) {
+  const bouncyBtn = document.getElementById("bounce_btn");
+  document.querySelectorAll(".card_save_btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tense = btn.dataset.tense;
+      const conjugations = indicative[tense];
+      if (!conjugations) return;
+
+      const added = addSavedVerb(verb, tense, conjugations);
+      if (added) {
+        saveVerb(verb, tense, conjugations);
+        counter(bouncyBtn);
+        btn.classList.add("saved");
+        btn.innerHTML = '<span class="material-symbols-outlined">check</span> Gespeichert';
+      } else {
+        btn.classList.add("duplicate");
+        btn.innerHTML = '<span class="material-symbols-outlined">close</span> Schon gespeichert';
+        setTimeout(() => {
+          btn.classList.remove("duplicate");
+          btn.innerHTML = '<span class="material-symbols-outlined">bookmark</span> Speichern';
+        }, 1200);
+      }
+    });
+  });
+}
+
 export async function conjugator(inputVerb) {
   if (!inputVerb.trim()) return;
   renderLoading();
@@ -67,6 +100,7 @@ export async function conjugator(inputVerb) {
     const indicative = getIndicativeTenses(data);
     const container = document.querySelector("#conjugator_result");
     container.innerHTML = renderAllTenses(inputVerb, indicative);
+    attachSaveHandlers(inputVerb, indicative);
     return true;
   } catch (e) {
     renderError(inputVerb);
