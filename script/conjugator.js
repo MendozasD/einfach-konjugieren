@@ -20,29 +20,31 @@ function renderLoading() {
     </div>`;
 }
 
-function renderTensePills(activeTense) {
-  const pills = INDICATIVE_TENSES.map(
-    (t) =>
-      `<button class="tense_pill${t === activeTense ? " active" : ""}" data-tense="${t}">${TENSE_LABELS[t]}</button>`
-  ).join("");
-  return `<div id="tense_selector">${pills}</div>`;
-}
+function renderAllTenses(verb, indicative) {
+  const cards = INDICATIVE_TENSES.map((tense) => {
+    if (!indicative[tense]) return "";
+    const rows = PERSON_ORDER.map(
+      (p) => `
+        <div class="conjugated_row">
+          <p class="pronoun_column">${PERSON_LABELS[p]}</p>
+          <p class="conjugated_column">${indicative[tense][p]}</p>
+        </div>`
+    ).join("");
 
-function renderConjugationCard(verb, tense, conjugations) {
-  const rows = PERSON_ORDER.map(
-    (p) => `
-      <div class="conjugated_row">
-        <p class="pronoun_column">${PERSON_LABELS[p]}</p>
-        <p class="conjugated_column">${conjugations[p]}</p>
-      </div>`
-  ).join("");
+    return `
+      <div class="tense_card animate__animated animate__fadeInUp">
+        <div class="tense_card_header">
+          <h2>${TENSE_LABELS[tense]}</h2>
+        </div>
+        ${rows}
+      </div>`;
+  }).join("");
 
   return `
-    <div id="conjugated_box" class="animate__animated animate__fadeInUp">
-      <div id="infinitive"><h1>${verb}</h1></div>
-      <span class="tense_label">${TENSE_LABELS[tense]}</span>
-      ${rows}
-    </div>`;
+    <div id="verb_header" class="animate__animated animate__fadeInUp">
+      <h1>${verb}</h1>
+    </div>
+    <div id="tenses_grid">${cards}</div>`;
 }
 
 function renderError(verb) {
@@ -50,22 +52,6 @@ function renderError(verb) {
     <div id="conjugator_error" class="animate__animated animate__fadeInUp">
       Verb \u201E${verb}\u201C nicht gefunden.
     </div>`;
-}
-
-function showTense(tense) {
-  const { currentVerb, currentData } = getState();
-  const indicative = getIndicativeTenses(currentData);
-  if (!indicative[tense]) return;
-
-  setCurrentTense(tense);
-  const container = document.querySelector("#conjugator_result");
-  container.innerHTML =
-    renderTensePills(tense) + renderConjugationCard(currentVerb, tense, indicative[tense]);
-
-  // Re-attach pill click handlers
-  container.querySelectorAll(".tense_pill").forEach((pill) => {
-    pill.addEventListener("click", () => showTense(pill.dataset.tense));
-  });
 }
 
 export async function conjugator(inputVerb) {
@@ -77,7 +63,10 @@ export async function conjugator(inputVerb) {
     setCurrentVerb(inputVerb);
     setCurrentData(data);
     setCurrentTense("PRASENS");
-    showTense("PRASENS");
+
+    const indicative = getIndicativeTenses(data);
+    const container = document.querySelector("#conjugator_result");
+    container.innerHTML = renderAllTenses(inputVerb, indicative);
     return true;
   } catch (e) {
     renderError(inputVerb);

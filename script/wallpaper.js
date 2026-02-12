@@ -9,6 +9,46 @@ const SUBTLE_COLOR = "#888888";
 const ORANGE = "#ff5c36";
 const MAX_VERBS_PER_PAGE = 5;
 
+const SATOSHI_URL =
+  "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap";
+
+async function loadFontForCanvas() {
+  // Fetch the Fontshare CSS to extract the actual font file URLs
+  try {
+    const cssRes = await fetch(SATOSHI_URL);
+    const cssText = await cssRes.text();
+
+    // Extract woff2 URLs and their weight from @font-face rules
+    const faceRegex =
+      /@font-face\s*\{[^}]*font-weight:\s*(\d+)[^}]*src:[^}]*url\(([^)]+\.woff2)\)[^}]*\}/g;
+    let match;
+    const loaded = [];
+
+    while ((match = faceRegex.exec(cssText)) !== null) {
+      const weight = match[1];
+      const url = match[2];
+      const face = new FontFace("Satoshi", `url(${url})`, {
+        weight,
+        style: "normal",
+      });
+      try {
+        const loadedFace = await face.load();
+        document.fonts.add(loadedFace);
+        loaded.push(weight);
+      } catch {
+        // skip individual weights that fail
+      }
+    }
+
+    if (loaded.length === 0) {
+      // Fallback: just wait for existing fonts
+      await document.fonts.ready;
+    }
+  } catch {
+    await document.fonts.ready;
+  }
+}
+
 function drawWallpaper(canvas, verbs, pageNum, totalPages) {
   const ctx = canvas.getContext("2d");
   ctx.fillStyle = BG;
@@ -80,8 +120,8 @@ export async function generateWallpaper() {
   const saved = getSavedVerbs();
   if (saved.length === 0) return;
 
-  // Wait for fonts
-  await document.fonts.ready;
+  // Load fonts explicitly for Canvas
+  await loadFontForCanvas();
 
   const totalPages = Math.ceil(saved.length / MAX_VERBS_PER_PAGE);
 

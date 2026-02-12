@@ -29,6 +29,17 @@ export const PERSON_LABELS = {
   P3: "sie/Sie",
 };
 
+let verbListCache = null;
+
+export async function fetchVerbList() {
+  if (verbListCache) return verbListCache;
+  const res = await fetch("/api/german-verbs-api/verbs");
+  if (!res.ok) return [];
+  const json = await res.json();
+  verbListCache = json.data || [];
+  return verbListCache;
+}
+
 export async function fetchAllTenses(verb) {
   const res = await fetch(
     `/api/german-verbs-api?verb=${encodeURIComponent(verb)}`
@@ -40,7 +51,6 @@ export async function fetchAllTenses(verb) {
 }
 
 export function formatConjugation(parts) {
-  // API returns arrays like ["habe", "gegangen"] — join with space
   return parts.join(" ");
 }
 
