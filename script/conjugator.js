@@ -50,6 +50,10 @@ function renderAllTenses(verb, indicative) {
   return `
     <div id="verb_header" class="animate__animated animate__fadeInUp">
       <h1>${verb}</h1>
+      <button id="new_search_btn" class="pan_font">
+        <span class="material-symbols-outlined">search</span>
+        Neues Verb
+      </button>
     </div>
     <div id="tenses_grid">${cards}</div>`;
 }
@@ -62,7 +66,6 @@ function renderError(verb) {
 }
 
 function attachSaveHandlers(verb, indicative) {
-  const bouncyBtn = document.getElementById("bounce_btn");
   document.querySelectorAll(".card_save_btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const tense = btn.dataset.tense;
@@ -72,7 +75,7 @@ function attachSaveHandlers(verb, indicative) {
       const added = addSavedVerb(verb, tense, conjugations);
       if (added) {
         saveVerb(verb, tense, conjugations);
-        counter(bouncyBtn);
+        counter();
         btn.classList.add("saved");
         btn.innerHTML = '<span class="material-symbols-outlined">check</span> Gespeichert';
       } else {
@@ -87,8 +90,20 @@ function attachSaveHandlers(verb, indicative) {
   });
 }
 
+function showInput() {
+  const inputField = document.getElementById("input_field");
+  const verbInput = document.getElementById("verb_input");
+  inputField.classList.remove("hidden");
+  document.querySelector("#conjugator_result").innerHTML = "";
+  verbInput.value = "";
+  verbInput.focus();
+}
+
 export async function conjugator(inputVerb) {
   if (!inputVerb.trim()) return;
+
+  const inputField = document.getElementById("input_field");
+  inputField.classList.add("hidden");
   renderLoading();
 
   try {
@@ -101,8 +116,13 @@ export async function conjugator(inputVerb) {
     const container = document.querySelector("#conjugator_result");
     container.innerHTML = renderAllTenses(inputVerb, indicative);
     attachSaveHandlers(inputVerb, indicative);
+
+    // "Neues Verb" button brings input back
+    document.getElementById("new_search_btn").addEventListener("click", showInput);
+
     return true;
   } catch (e) {
+    inputField.classList.remove("hidden");
     renderError(inputVerb);
     return false;
   }

@@ -50,12 +50,31 @@ const searchBtn = document.querySelector("#search_btn");
 const pdfBtn = document.getElementById("pdf_btn");
 const wallpaperBtn = document.getElementById("wallpaper_btn");
 const autocompleteList = document.getElementById("autocomplete_list");
+const floatingCounter = document.getElementById("floating_counter");
+const conjugatedList = document.getElementById("conjugated_list");
 
 // Preload verb list for autocomplete
 let verbList = [];
 fetchVerbList().then((list) => {
   verbList = list;
 });
+
+// Floating counter: flip direction based on scroll position
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        floatingCounter.href = "#conjugator";
+        floatingCounter.classList.add("upward");
+      } else {
+        floatingCounter.href = "#conjugated_list";
+        floatingCounter.classList.remove("upward");
+      }
+    });
+  },
+  { threshold: 0.1 }
+);
+observer.observe(conjugatedList);
 
 // Autocomplete
 let acSelected = -1;
