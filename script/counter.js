@@ -1,9 +1,9 @@
 import { getSavedCount } from "./state.js";
 
-export function counter(bouncyCounter) {
+export function counter() {
   const count = getSavedCount();
-  const countEl = document.getElementById("bounce_count");
-  if (countEl) countEl.textContent = count;
+  const floatingCounter = document.getElementById("floating_counter");
+  if (floatingCounter) floatingCounter.textContent = count;
 
   // Enable/disable download buttons
   const pdfBtn = document.getElementById("pdf_btn");

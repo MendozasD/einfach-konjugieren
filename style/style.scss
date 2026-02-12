@@ -338,11 +338,6 @@
     font-size: 1.5rem;
     animation: bounce-arrow 1.2s ease-in-out infinite;
   }
-
-  #bounce_count {
-    font-family: var(--panchang);
-    font-size: 1rem;
-  }
 }
 
 @keyframes bounce-arrow {
@@ -517,6 +512,50 @@
   margin: 0 auto 10px;
   width: fit-content;
   text-align: center;
+}
+
+
+// ======================================================
+// ================= FLOATING COUNTER ===================
+// ======================================================
+
+#floating_counter {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1px solid white;
+  background: #242424;
+  color: white;
+  font-family: var(--panchang);
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: all 500ms ease;
+  animation: bouncy 0.8s infinite alternate;
+
+  &:visited {
+    color: white;
+  }
+
+  &:hover {
+    border-color: var(--orange);
+    box-shadow: 0 0 15px rgba(255, 92, 54, 0.4);
+  }
+}
+
+@keyframes bouncy {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-20%);
+  }
 }
 
 // ======================================================

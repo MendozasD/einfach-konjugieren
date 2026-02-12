@@ -18,10 +18,11 @@ document.querySelector("#app").innerHTML = `
       </section>
     </div>
 
+    <a href="#conjugated_list" id="floating_counter">0</a>
+
     <div id="section_divider">
       <a href="#conjugated_list" id="bounce_btn">
         <span class="material-symbols-outlined">expand_more</span>
-        <span id="bounce_count">0</span>
       </a>
     </div>
 
