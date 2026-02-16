@@ -25,22 +25,22 @@
 | 5 | Architecture | **High** | api/controllers/verbs.js:67 | `var hasTense = hasAux = ...= true` chained assignment creates implicit globals | Small | **FIXED** |
 | 6 | Security | Medium | api/app.js:20 | express.json({ type: "*/*" }) parses all content types as JSON | Small | **FIXED** |
 | 7 | Security | Medium | api/package.json | express 4.17.1 is 4+ years old; missing security patches | Small | **FIXED** |
-| 8 | Security | Medium | api/app.js | No rate limiting on any API endpoints | Medium | Open |
+| 8 | Security | Medium | api/app.js | No rate limiting on any API endpoints | Medium | **FIXED** |
 | 9 | Security | Medium | api/app.js | No helmet middleware for security headers | Small | **FIXED** |
 | 10 | Security | Medium | api/app.js | No request body size limit (potential DoS) | Small | **FIXED** |
-| 11 | Architecture | Medium | api/controllers/logger.js:23-26 | Dead code: POST and else branches both use req.body | Small | Open |
-| 12 | Operational | Medium | api/controllers/logger.js | File-based logging to log.txt without rotation | Small | Open |
+| 11 | Architecture | Medium | api/controllers/logger.js:23-26 | Dead code: POST and else branches both use req.body | Small | **FIXED** |
+| 12 | Operational | Medium | api/controllers/logger.js | File-based logging to log.txt without rotation | Small | **FIXED** |
 | 13 | DRY | Medium | spa save_verb.js + conjugator.js | Duplicated HTML card rendering logic | Medium | Open |
-| 14 | Performance | Medium | spa/script/main.js:80 | Autocomplete input handler has no debounce | Small | Open |
+| 14 | Performance | Medium | spa/script/main.js:80 | Autocomplete input handler has no debounce | Small | **FIXED** |
 | 15 | Operational | Medium | api/package.json | apicache 1.6.2 appears abandoned (last update 2022) | Medium | Open |
-| 16 | DRY | Low | wallpaper.js, style.scss, pdf.js | Orange #ff5c36 defined in 3 separate places | Small | Open |
-| 17 | Architecture | Low | api/controllers/verbs.js:99 | conjugateArray calls errorHandler directly instead of as middleware | Small | Open |
-| 18 | DRY | Low | api/controllers/verbs.js | Verb-missing validation check duplicated in 3 handlers | Small | Open |
-| 19 | Performance | Low | spa/script/wallpaper.js:28 | External font re-fetched on every wallpaper generation | Small | Open |
-| 20 | Operational | Low | both docker-compose.yml | No resource limits (memory/CPU) on containers | Small | Open |
-| 21 | Operational | Low | SPA README.md | README is "congugation_present_app" — typo, no docs | Small | Open |
+| 16 | DRY | Low | wallpaper.js, style.scss, pdf.js | Orange #ff5c36 defined in 3 separate places | Small | **Documented** |
+| 17 | Architecture | Low | api/controllers/verbs.js:99 | conjugateArray calls errorHandler directly instead of as middleware | Small | **FIXED** |
+| 18 | DRY | Low | api/controllers/verbs.js | Verb-missing validation check duplicated in 3 handlers | Small | **FIXED** |
+| 19 | Performance | Low | spa/script/wallpaper.js:28 | External font re-fetched on every wallpaper generation | Small | **FIXED** |
+| 20 | Operational | Low | both docker-compose.yml | No resource limits (memory/CPU) on containers | Small | **FIXED** |
+| 21 | Operational | Low | SPA README.md | README is "congugation_present_app" — typo, no docs | Small | **FIXED** |
 | 22 | Operational | Low | both projects | No CI/CD, no linting, no pre-commit hooks | Large | Open |
-| 23 | Security | Low | api/.env | .env committed to server (PORT=3000, not sensitive) | Small | Open |
+| 23 | Security | Low | api/.env | .env committed to server (PORT=3000, not sensitive) | Small | **FIXED** |
 
 ## Top 5 Priority Actions (all FIXED)
 
@@ -56,5 +56,5 @@
 Total findings: 23
 By severity:  Critical: 1 | High: 4 | Medium: 9 | Low: 9
 By category:  DRY: 3 | Architecture: 3 | Performance: 2 | Security: 8 | Project: 0 | Operational: 7
-Fixed:        8 of 23 (top 5 priority actions covering 8 findings)
+Fixed:        19 of 23
 ```
