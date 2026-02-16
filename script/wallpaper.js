@@ -6,13 +6,17 @@ const HEIGHT = 1920;
 const BG = "#0a0a0a";
 const TEXT_COLOR = "#e8e8e8";
 const SUBTLE_COLOR = "#888888";
+// Orange color matches --orange in style.scss
 const ORANGE = "#ff5c36";
 const MAX_VERBS_PER_PAGE = 5;
+
+let fontsLoaded = false;
 
 const SATOSHI_URL =
   "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap";
 
 async function loadFontForCanvas() {
+  if (fontsLoaded) return;
   // Fetch the Fontshare CSS to extract the actual font file URLs
   try {
     const cssRes = await fetch(SATOSHI_URL);
@@ -44,6 +48,7 @@ async function loadFontForCanvas() {
       // Fallback: just wait for existing fonts
       await document.fonts.ready;
     }
+    fontsLoaded = true;
   } catch {
     await document.fonts.ready;
   }

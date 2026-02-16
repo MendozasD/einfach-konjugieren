@@ -1,7 +1,10 @@
 import "animate.css";
 import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
-import { fetchVerbList } from "/script/api.js";
+import { fetchVerbList, getRandomVerb } from "/script/api.js";
+import { getSavedVerbs } from "/script/state.js";
+import { restoreSavedVerbs } from "/script/save_verb.js";
+import { counter } from "/script/counter.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -9,11 +12,18 @@ document.querySelector("#app").innerHTML = `
       <h1 class="title">Einfach Konjugieren</h1>
       <section id="input_field">
         <input type="text" id="verb_input" placeholder="Wort eingeben" autocomplete="off" />
+        <span id="kbd_hint">Enter ↵</span>
         <span id="search_btn" class="material-symbols-outlined">
           arrow_circle_right
         </span>
         <ul id="autocomplete_list"></ul>
       </section>
+      <div id="random_verb_wrap">
+        <button id="random_verb_btn">
+          <span class="material-symbols-outlined">casino</span>
+          Zufälliges Verb
+        </button>
+      </div>
       <section id="conjugator_result">
       </section>
     </div>
@@ -44,6 +54,15 @@ document.querySelector("#app").innerHTML = `
   </div>
 `;
 
+// Debounce utility
+let debounceTimer;
+function debounce(fn, delay) {
+  return (...args) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => fn(...args), delay);
+  };
+}
+
 // Elements
 const verbInput = document.querySelector("#verb_input");
 const searchBtn = document.querySelector("#search_btn");
@@ -52,12 +71,28 @@ const wallpaperBtn = document.getElementById("wallpaper_btn");
 const autocompleteList = document.getElementById("autocomplete_list");
 const floatingCounter = document.getElementById("floating_counter");
 const conjugatedList = document.getElementById("conjugated_list");
+const randomVerbBtn = document.getElementById("random_verb_btn");
+const kbdHint = document.getElementById("kbd_hint");
 
 // Preload verb list for autocomplete
 let verbList = [];
 fetchVerbList().then((list) => {
   verbList = list;
 });
+
+// Restore saved verbs from localStorage
+const saved = getSavedVerbs();
+if (saved.length > 0) {
+  restoreSavedVerbs(saved);
+}
+counter();
+
+// Check URL for ?verb= parameter
+const urlVerb = new URLSearchParams(window.location.search).get("verb");
+if (urlVerb) {
+  verbInput.value = urlVerb;
+  conjugator(urlVerb.toLowerCase().trim());
+}
 
 // Floating counter: flip direction based on scroll position
 const observer = new IntersectionObserver(
@@ -75,6 +110,17 @@ const observer = new IntersectionObserver(
   { threshold: 0.1 }
 );
 observer.observe(conjugatedList);
+
+// Keyboard hint: show on focus, hide on blur or typing
+verbInput.addEventListener("focus", () => {
+  if (!verbInput.value) kbdHint.classList.add("visible");
+});
+verbInput.addEventListener("blur", () => {
+  kbdHint.classList.remove("visible");
+});
+verbInput.addEventListener("input", () => {
+  kbdHint.classList.remove("visible");
+});
 
 // Autocomplete
 let acSelected = -1;
@@ -108,9 +154,9 @@ function showAutocomplete(value) {
   autocompleteList.classList.add("visible");
 }
 
-verbInput.addEventListener("input", () => {
+verbInput.addEventListener("input", debounce(() => {
   showAutocomplete(verbInput.value);
-});
+}, 150));
 
 verbInput.addEventListener("blur", () => {
   setTimeout(() => autocompleteList.classList.remove("visible"), 150);
@@ -141,6 +187,7 @@ async function doSearch() {
   const input = verbInput.value.toLowerCase().trim();
   if (!input) return;
   autocompleteList.classList.remove("visible");
+  kbdHint.classList.remove("visible");
   await conjugator(input);
 }
 
@@ -148,6 +195,14 @@ searchBtn.addEventListener("click", doSearch);
 
 verbInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter" && acSelected < 0) doSearch();
+});
+
+// Random verb
+randomVerbBtn.addEventListener("click", async () => {
+  const verb = getRandomVerb();
+  if (!verb) return;
+  verbInput.value = verb;
+  await doSearch();
 });
 
 // PDF download

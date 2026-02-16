@@ -10,6 +10,7 @@ export async function generatePDF() {
 
   const doc = new jsPDF("p", "mm", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
+  // Matches --orange (#ff5c36) in style.scss
   const orange = [255, 92, 54];
   const darkGray = [40, 40, 40];
 
