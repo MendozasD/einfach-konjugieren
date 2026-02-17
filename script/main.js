@@ -25,25 +25,34 @@ document.querySelector("#app").innerHTML = `
           Zuf\u00e4lliges Verb
         </button>
       </div>
+      <div id="intro_box">
+        <div class="intro_item">
+          <span class="material-symbols-outlined">search</span>
+          <span>Verb eingeben & alle 6 Zeitformen sehen</span>
+        </div>
+        <div class="intro_item">
+          <span class="material-symbols-outlined">bookmark</span>
+          <span>Speichern, als PDF oder Wallpaper exportieren</span>
+        </div>
+        <div class="intro_item">
+          <span class="material-symbols-outlined">auto_stories</span>
+          <span>897 Redewendungen mit \u00dcbersetzung durchst\u00f6bern</span>
+        </div>
+      </div>
       <section id="conjugator_result">
       </section>
     </div>
 
     <a href="#conjugated_list" id="floating_counter">0</a>
+    <a href="#idioms_section" id="floating_idioms_btn">
+      <span class="material-symbols-outlined">auto_stories</span>
+      <span class="floating_idioms_label">Redewendungen</span>
+    </a>
 
     <div id="section_divider">
-      <a href="#idioms_section" id="bounce_btn">
+      <a href="#conjugated_list" id="bounce_btn">
         <span class="material-symbols-outlined">expand_more</span>
       </a>
-    </div>
-
-    <div id="idioms_section">
-      <h1 class="title">Redewendungen <span id="idioms_count" class="idioms_count_badge">0</span></h1>
-      <div id="idioms_search_wrap">
-        <span class="material-symbols-outlined">search</span>
-        <input type="text" id="idioms_search" placeholder="Redewendung oder Bedeutung suchen\u2026" autocomplete="off" />
-      </div>
-      <div id="idioms_grid"></div>
     </div>
 
     <div id="conjugated_list">
@@ -64,6 +73,16 @@ document.querySelector("#app").innerHTML = `
       </section>
       <section id="conjugated_table"></section>
     </div>
+
+    <div id="idioms_section">
+      <h1 class="title">Redewendungen <span id="idioms_count" class="idioms_count_badge">0</span></h1>
+      <div id="idioms_search_wrap">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" id="idioms_search" placeholder="Redewendung oder Bedeutung suchen\u2026" autocomplete="off" />
+      </div>
+      <div id="idioms_grid"></div>
+    </div>
+
     <footer id="made_by">
       <span>Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></span>
       <span class="footer_links"><a href="/impressum.html">Impressum</a> \u00b7 <a href="/datenschutz.html">Datenschutz</a></span>

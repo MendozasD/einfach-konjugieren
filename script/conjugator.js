@@ -173,6 +173,13 @@ function showInput() {
 export async function conjugator(inputVerb) {
   if (!inputVerb.trim()) return;
 
+  // Hide intro box permanently on first conjugation
+  const introBox = document.getElementById("intro_box");
+  if (introBox) {
+    introBox.classList.add("hidden");
+    introBox.addEventListener("transitionend", () => introBox.remove(), { once: true });
+  }
+
   const inputField = document.getElementById("input_field");
   inputField.classList.add("hidden");
   renderLoading();
