@@ -10,48 +10,10 @@ const SUBTLE_COLOR = "#888888";
 const ORANGE = "#ff5c36";
 const MAX_VERBS_PER_PAGE = 5;
 
-let fontsLoaded = false;
-
-const SATOSHI_URL =
-  "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap";
-
 async function loadFontForCanvas() {
-  if (fontsLoaded) return;
-  // Fetch the Fontshare CSS to extract the actual font file URLs
-  try {
-    const cssRes = await fetch(SATOSHI_URL);
-    const cssText = await cssRes.text();
-
-    // Extract woff2 URLs and their weight from @font-face rules
-    const faceRegex =
-      /@font-face\s*\{[^}]*font-weight:\s*(\d+)[^}]*src:[^}]*url\(([^)]+\.woff2)\)[^}]*\}/g;
-    let match;
-    const loaded = [];
-
-    while ((match = faceRegex.exec(cssText)) !== null) {
-      const weight = match[1];
-      const url = match[2];
-      const face = new FontFace("Satoshi", `url(${url})`, {
-        weight,
-        style: "normal",
-      });
-      try {
-        const loadedFace = await face.load();
-        document.fonts.add(loadedFace);
-        loaded.push(weight);
-      } catch {
-        // skip individual weights that fail
-      }
-    }
-
-    if (loaded.length === 0) {
-      // Fallback: just wait for existing fonts
-      await document.fonts.ready;
-    }
-    fontsLoaded = true;
-  } catch {
-    await document.fonts.ready;
-  }
+  // Fonts are self-hosted and loaded via fonts.css.
+  // Just wait for them to be ready for Canvas rendering.
+  await document.fonts.ready;
 }
 
 function drawWallpaper(canvas, verbs, pageNum, totalPages) {

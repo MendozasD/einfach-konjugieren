@@ -1,0 +1,82 @@
+/* ===========================================
+   LOCAL FONTS — Panchang, Satoshi, Material Symbols
+   Replaces external fontshare + Google Fonts CDN
+   =========================================== */
+
+/* --- Panchang --- */
+@font-face {
+  font-family: "Panchang";
+  src: url("/fonts/panchang/panchang-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Panchang";
+  src: url("/fonts/panchang/panchang-800.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* --- Satoshi --- */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi/satoshi-300.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi/satoshi-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi/satoshi-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi/satoshi-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi/satoshi-900.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* --- Material Symbols Outlined --- */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("/fonts/material/material-symbols-outlined.woff2") format("woff2");
+  font-weight: 100 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}

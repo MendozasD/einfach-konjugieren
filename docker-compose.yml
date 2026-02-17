@@ -7,6 +7,15 @@ services:
       - caddy_network
     security_opt:
       - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /data/caddy
+      - /config/caddy
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
     deploy:
       resources:
         limits:

@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build data (large files)
+data/kaikki-german.jsonl
+data/kaikki-german.jsonl.gz
+data/verbs.json

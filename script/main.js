@@ -2,8 +2,8 @@ import "animate.css";
 import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
 import { fetchVerbList, getRandomVerb } from "/script/api.js";
-import { getSavedVerbs } from "/script/state.js";
-import { restoreSavedVerbs } from "/script/save_verb.js";
+import { getSavedVerbs, clearAllSavedVerbs } from "/script/state.js";
+import { restoreSavedVerbs, renderEmptyState } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
 
 document.querySelector("#app").innerHTML = `
@@ -47,10 +47,17 @@ document.querySelector("#app").innerHTML = `
           <span class="material-symbols-outlined">wallpaper</span>
           Als Wallpaper
         </button>
+        <button id="clear_btn" class="download_btn clear_btn" disabled>
+          <span class="material-symbols-outlined">delete_sweep</span>
+          Alle entfernen
+        </button>
       </section>
       <section id="conjugated_table"></section>
     </div>
-    <footer id="made_by">Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></footer>
+    <footer id="made_by">
+      <span>Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></span>
+      <span class="footer_links"><a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a></span>
+    </footer>
   </div>
 `;
 
@@ -125,6 +132,11 @@ verbInput.addEventListener("input", () => {
 // Autocomplete
 let acSelected = -1;
 
+// Anglify: convert German special chars for matching
+function anglify(s) {
+  return s.replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ä/g, "ae").replace(/ß/g, "ss");
+}
+
 function showAutocomplete(value) {
   autocompleteList.innerHTML = "";
   acSelected = -1;
@@ -134,7 +146,7 @@ function showAutocomplete(value) {
   }
   const lower = value.toLowerCase();
   const matches = verbList
-    .filter((v) => v.startsWith(lower))
+    .filter((v) => v.startsWith(lower) || anglify(v).startsWith(lower))
     .slice(0, 8);
   if (matches.length === 0) {
     autocompleteList.classList.remove("visible");
@@ -203,6 +215,22 @@ randomVerbBtn.addEventListener("click", async () => {
   if (!verb) return;
   verbInput.value = verb;
   await doSearch();
+});
+
+// Clear all saved verbs
+const clearBtn = document.getElementById("clear_btn");
+clearBtn.addEventListener("click", () => {
+  if (!confirm("Alle gespeicherten Verben entfernen?")) return;
+  clearAllSavedVerbs();
+  const table = document.getElementById("conjugated_table");
+  table.querySelectorAll(".enlisted_verb").forEach((card) => {
+    card.classList.add("animate__fadeOutDown");
+    card.addEventListener("animationend", () => card.remove());
+  });
+  setTimeout(() => {
+    renderEmptyState();
+    counter();
+  }, 400);
 });
 
 // PDF download

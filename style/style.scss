@@ -42,6 +42,9 @@
     color: rgba(255, 255, 255, 0.35);
     z-index: 10;
     pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
     a {
       color: rgba(255, 255, 255, 0.35);
       text-decoration: none;
@@ -50,6 +53,11 @@
       }
       &:hover {
         color: white;
+      }
+    }
+    .footer_links {
+      a {
+        text-decoration: none;
       }
     }
   }
@@ -125,6 +133,74 @@
 }
 
 // ======================================================
+// ================= KEYBOARD HINT ======================
+// ======================================================
+
+#kbd_hint {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.3);
+  font-family: var(--panchang);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+// ======================================================
+// ================= RANDOM VERB BUTTON =================
+// ======================================================
+
+#random_verb_wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  transition: opacity 300ms ease, max-height 300ms ease;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+#input_field.hidden ~ #random_verb_wrap {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
+}
+
+#random_verb_btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 200ms ease;
+  font-family: var(--panchang);
+
+  .material-symbols-outlined {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// ======================================================
 // ================= AUTOCOMPLETE =======================
 // ======================================================
 
@@ -184,12 +260,23 @@
       text-decoration-color: var(--orange);
     }
   }
+}
 
-  #new_search_btn {
+// ======================================================
+// ================= VERB ACTIONS =======================
+// ======================================================
+
+#verb_actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px auto 0;
+  flex-wrap: wrap;
+
+  button {
     display: flex;
     align-items: center;
     gap: 4px;
-    margin: 12px auto 0;
     padding: 6px 18px;
     font-size: 0.8rem;
     border-radius: 20px;
@@ -207,6 +294,28 @@
       border-color: var(--orange);
       background: var(--orange);
     }
+  }
+}
+
+#share_toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--green);
+  color: black;
+  font-family: var(--panchang);
+  font-size: 0.75rem;
+  padding: 6px 20px;
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 300ms ease;
+  z-index: 200;
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 }
 
@@ -557,6 +666,27 @@
   text-align: center;
 }
 
+// ======================================================
+// ================= EMPTY STATE ========================
+// ======================================================
+
+.empty_state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(255, 255, 255, 0.35);
+
+  .material-symbols-outlined {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-family: var(--panchang);
+    font-size: 0.85rem;
+  }
+}
 
 // ======================================================
 // ================= FLOATING COUNTER ===================
@@ -567,7 +697,7 @@
   bottom: 20px;
   right: 20px;
   z-index: 100;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   width: 3rem;
@@ -589,6 +719,10 @@
   &:hover {
     border-color: var(--orange);
     box-shadow: 0 0 15px rgba(255, 92, 54, 0.4);
+  }
+
+  &.has_items {
+    display: flex;
   }
 
   &.upward {
@@ -625,4 +759,15 @@
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 100, "GRAD" -25, "opsz" 48;
+}
+
+// ======================================================
+// ================= CLEAR ALL BUTTON ===================
+// ======================================================
+
+.clear_btn {
+  &:hover:not(:disabled) {
+    border-color: var(--red) !important;
+    box-shadow: 0 0 15px rgba(255, 44, 85, 0.3) !important;
+  }
 }
