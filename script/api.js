@@ -29,7 +29,7 @@ export const PERSON_LABELS = {
   P3: "sie/Sie",
 };
 
-const VERB_LIST_KEY = "einfach_verb_list_v2";
+const VERB_LIST_KEY = "einfach_verb_list_v3";
 const VERB_LIST_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
 let verbListCache = null;
 
