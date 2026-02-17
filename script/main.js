@@ -5,6 +5,7 @@ import { fetchVerbList, getRandomVerb } from "/script/api.js";
 import { getSavedVerbs, clearAllSavedVerbs } from "/script/state.js";
 import { restoreSavedVerbs, renderEmptyState } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
+import { initIdioms } from "/script/idioms.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -12,7 +13,7 @@ document.querySelector("#app").innerHTML = `
       <h1 class="title">Einfach Konjugieren</h1>
       <section id="input_field">
         <input type="text" id="verb_input" placeholder="Wort eingeben" autocomplete="off" />
-        <span id="kbd_hint">Enter ↵</span>
+        <span id="kbd_hint">Enter \u21b5</span>
         <span id="search_btn" class="material-symbols-outlined">
           arrow_circle_right
         </span>
@@ -21,7 +22,7 @@ document.querySelector("#app").innerHTML = `
       <div id="random_verb_wrap">
         <button id="random_verb_btn">
           <span class="material-symbols-outlined">casino</span>
-          Zufälliges Verb
+          Zuf\u00e4lliges Verb
         </button>
       </div>
       <section id="conjugator_result">
@@ -31,9 +32,18 @@ document.querySelector("#app").innerHTML = `
     <a href="#conjugated_list" id="floating_counter">0</a>
 
     <div id="section_divider">
-      <a href="#conjugated_list" id="bounce_btn">
+      <a href="#idioms_section" id="bounce_btn">
         <span class="material-symbols-outlined">expand_more</span>
       </a>
+    </div>
+
+    <div id="idioms_section">
+      <h1 class="title">Redewendungen <span id="idioms_count" class="idioms_count_badge">0</span></h1>
+      <div id="idioms_search_wrap">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" id="idioms_search" placeholder="Redewendung oder Bedeutung suchen\u2026" autocomplete="off" />
+      </div>
+      <div id="idioms_grid"></div>
     </div>
 
     <div id="conjugated_list">
@@ -56,7 +66,7 @@ document.querySelector("#app").innerHTML = `
     </div>
     <footer id="made_by">
       <span>Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></span>
-      <span class="footer_links"><a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a></span>
+      <span class="footer_links"><a href="/impressum.html">Impressum</a> \u00b7 <a href="/datenschutz.html">Datenschutz</a></span>
     </footer>
   </div>
 `;
@@ -86,6 +96,9 @@ let verbList = [];
 fetchVerbList().then((list) => {
   verbList = list;
 });
+
+// Initialize idioms section
+initIdioms();
 
 // Restore saved verbs from localStorage
 const saved = getSavedVerbs();
@@ -134,7 +147,7 @@ let acSelected = -1;
 
 // Anglify: convert German special chars for matching
 function anglify(s) {
-  return s.replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ä/g, "ae").replace(/ß/g, "ss");
+  return s.replace(/\u00f6/g, "oe").replace(/\u00fc/g, "ue").replace(/\u00e4/g, "ae").replace(/\u00df/g, "ss");
 }
 
 function showAutocomplete(value) {

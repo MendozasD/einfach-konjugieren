@@ -69,6 +69,40 @@ export function getRandomVerb() {
   return verbListCache[Math.floor(Math.random() * verbListCache.length)];
 }
 
+// Idiom list (multi-word verbs with glosses)
+const IDIOM_LIST_KEY = "einfach_idiom_list_v1";
+const IDIOM_LIST_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
+let idiomListCache = null;
+
+export async function fetchIdiomList() {
+  if (idiomListCache) return idiomListCache;
+
+  try {
+    const stored = localStorage.getItem(IDIOM_LIST_KEY);
+    if (stored) {
+      const { data, ts } = JSON.parse(stored);
+      if (Date.now() - ts < IDIOM_LIST_TTL) {
+        idiomListCache = data;
+        return idiomListCache;
+      }
+    }
+  } catch { /* ignore */ }
+
+  try {
+    const res = await fetch("/api/german-verbs-api/idioms");
+    if (!res.ok) return [];
+    const json = await res.json();
+    idiomListCache = json.data || [];
+    localStorage.setItem(
+      IDIOM_LIST_KEY,
+      JSON.stringify({ data: idiomListCache, ts: Date.now() })
+    );
+    return idiomListCache;
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchAllTenses(verb) {
   const res = await fetch(
     `/api/german-verbs-api?verb=${encodeURIComponent(verb)}`

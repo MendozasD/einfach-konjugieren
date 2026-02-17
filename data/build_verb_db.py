@@ -303,6 +303,65 @@ def main():
     size_mb = os.path.getsize(output_file) / (1024 * 1024)
     print(f"  Output: {output_file} ({size_mb:.1f} MB)")
 
+    # Build idioms.json (multi-word verbs with English glosses)
+    idioms_file = os.path.join(os.path.dirname(output_file), "idioms.json")
+    build_idioms(input_file, verbs, idioms_file)
+
+
+
+def extract_best_gloss(entry):
+    """Extract the first useful English gloss from a kaikki entry."""
+    for sense in entry.get("senses", []):
+        glosses = sense.get("glosses", [])
+        for g in glosses:
+            if g and not g.startswith("Alternative") and not g.startswith("Obsolete"):
+                return g
+    return None
+
+
+def build_idioms(input_file, verbs_db, output_file="idioms.json"):
+    """Second pass: extract phrase + gloss for every multi-word verb in verbs_db."""
+    multi_word_keys = {k for k in verbs_db if " " in k}
+    if not multi_word_keys:
+        print("No multi-word verbs found, skipping idioms.")
+        return
+
+    print(f"\nBuilding idioms.json for {len(multi_word_keys)} multi-word verbs...")
+
+    glosses = {}
+    with open(input_file, "r", encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if entry.get("pos") != "verb":
+                continue
+            word = entry.get("word", "").strip()
+            if word not in multi_word_keys:
+                continue
+            if word in glosses:
+                continue
+            gloss = extract_best_gloss(entry)
+            if gloss:
+                glosses[word] = gloss
+
+    idioms = sorted(
+        [{"phrase": phrase, "gloss": gloss} for phrase, gloss in glosses.items()],
+        key=lambda x: x["phrase"].lower(),
+    )
+
+    with open(output_file, "w", encoding="utf-8") as fh:
+        json.dump(idioms, fh, ensure_ascii=False, indent=None, separators=(",", ":"))
+
+    import os
+    size_kb = os.path.getsize(output_file) / 1024
+    print(f"  Idioms: {len(idioms)} entries, {size_kb:.1f} KB -> {output_file}")
+    return idioms
+
 
 if __name__ == "__main__":
     main()
