@@ -84,13 +84,13 @@ function renderAllTenses(verb, indicative) {
   h1.textContent = verb;
   verbHeader.appendChild(h1);
 
+  h1.classList.add("verb_pill_clickable");
+  h1.title = "Neue Suche";
+  h1.addEventListener("click", showInput);
+
   const actions = document.createElement("div");
   actions.id = "verb_actions";
   actions.innerHTML = `
-    <button id="new_search_btn" class="pan_font">
-      <span class="material-symbols-outlined">search</span>
-      Neues Verb
-    </button>
     <button id="share_btn" class="pan_font">
       <span class="material-symbols-outlined">share</span>
       Teilen
@@ -199,7 +199,6 @@ export async function conjugator(inputVerb) {
     attachSaveHandlers(inputVerb, indicative);
     attachShareHandler(inputVerb);
 
-    document.getElementById("new_search_btn").addEventListener("click", showInput);
 
     return true;
   } catch (e) {

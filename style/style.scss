@@ -265,6 +265,13 @@
     &:hover {
       text-decoration-color: var(--orange);
     }
+    &.verb_pill_clickable {
+      cursor: pointer;
+      &:active {
+        transform: scale(0.96);
+        border-color: var(--orange);
+      }
+    }
   }
 }
 
