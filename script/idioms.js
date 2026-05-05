@@ -3,6 +3,7 @@ import { fetchIdiomList } from "/script/api.js";
 import { conjugator } from "/script/conjugator.js";
 
 let allIdioms = [];
+let rendered = false;
 
 function buildIdiomCard({ phrase, gloss }) {
   const card = document.createElement("div");
@@ -23,6 +24,7 @@ function buildIdiomCard({ phrase, gloss }) {
 }
 
 function filterIdioms(query) {
+  if (!rendered) return;
   const grid = document.getElementById("idioms_grid");
   if (!grid) return;
 
@@ -37,7 +39,6 @@ function filterIdioms(query) {
       )
     : allIdioms;
 
-  // Update count badge
   const badge = document.getElementById("idioms_count");
   if (badge) badge.textContent = filtered.length;
 
@@ -60,11 +61,9 @@ function filterIdioms(query) {
 async function handleIdiomClick(phrase) {
   const verbInput = document.getElementById("verb_input");
   const conjugatorSection = document.getElementById("conjugator");
+  if (!verbInput || !conjugatorSection) return;
 
-  // Scroll to conjugator
   conjugatorSection.scrollIntoView({ behavior: "smooth" });
-
-  // Set input and conjugate
   verbInput.value = phrase;
   await conjugator(phrase);
 }
@@ -73,23 +72,40 @@ export async function initIdioms() {
   allIdioms = await fetchIdiomList();
   if (!allIdioms.length) return;
 
-  const grid = document.getElementById("idioms_grid");
   const badge = document.getElementById("idioms_count");
+  const toggle = document.getElementById("idioms_toggle");
+  const searchWrap = document.getElementById("idioms_search_wrap");
+  const grid = document.getElementById("idioms_grid");
   const search = document.getElementById("idioms_search");
 
+  if (!toggle || !searchWrap || !grid || !search) return;
   if (badge) badge.textContent = allIdioms.length;
 
-  // Render initial grid
-  const fragment = document.createDocumentFragment();
-  for (const idiom of allIdioms) {
-    fragment.appendChild(buildIdiomCard(idiom));
-  }
-  grid.appendChild(fragment);
-
-  // Attach search
   let searchTimer;
-  search.addEventListener("input", () => {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => filterIdioms(search.value), 150);
+
+  toggle.addEventListener("click", () => {
+    const expanded = toggle.classList.toggle("expanded");
+    toggle.setAttribute("aria-expanded", String(expanded));
+    searchWrap.classList.toggle("visible", expanded);
+    grid.classList.toggle("visible", expanded);
+
+    if (expanded && !rendered) {
+      const fragment = document.createDocumentFragment();
+      for (const idiom of allIdioms) {
+        fragment.appendChild(buildIdiomCard(idiom));
+      }
+      grid.appendChild(fragment);
+      rendered = true;
+
+      search.addEventListener("input", () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => filterIdioms(search.value), 150);
+      });
+    }
+
+    if (!expanded && search.value) {
+      search.value = "";
+      filterIdioms("");
+    }
   });
 }
