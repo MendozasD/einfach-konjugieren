@@ -42,9 +42,9 @@ export function saveVerb(infinitive, tense, conjugations) {
   }
 
   // Delete button
-  const deleteBtn = document.createElement("span");
-  deleteBtn.className = "material-symbols-outlined delete_btn";
-  deleteBtn.textContent = "delete";
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "delete_btn pan_font";
+  deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span> Entfernen';
   deleteBtn.addEventListener("click", () => {
     removeSavedVerb(infinitive, tense);
     card.classList.add("animate__fadeOutDown");
