@@ -74,7 +74,7 @@ document.querySelector("#app").innerHTML = `
       <h1 class="title">Redewendungen <span id="idioms_count" class="idioms_count_badge">0</span></h1>
       <button id="idioms_toggle" aria-expanded="false">
         <span class="material-symbols-outlined">auto_stories</span>
-        <span>Alle Redewendungen durchstöbern</span>
+        <span>Redewendungen entdecken</span>
         <span class="material-symbols-outlined idioms_toggle_arrow">expand_more</span>
       </button>
       <div id="idioms_search_wrap">
