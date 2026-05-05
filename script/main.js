@@ -44,10 +44,6 @@ document.querySelector("#app").innerHTML = `
     </div>
 
     <a href="#conjugated_list" id="floating_counter">0</a>
-    <a href="#idioms_section" id="floating_idioms_btn">
-      <span class="material-symbols-outlined">auto_stories</span>
-      <span class="floating_idioms_label">Redewendungen</span>
-    </a>
 
     <div id="section_divider">
       <a href="#conjugated_list" id="bounce_btn">
@@ -76,6 +72,11 @@ document.querySelector("#app").innerHTML = `
 
     <div id="idioms_section">
       <h1 class="title">Redewendungen <span id="idioms_count" class="idioms_count_badge">0</span></h1>
+      <button id="idioms_toggle" aria-expanded="false">
+        <span class="material-symbols-outlined">auto_stories</span>
+        <span>Alle Redewendungen durchstöbern</span>
+        <span class="material-symbols-outlined idioms_toggle_arrow">expand_more</span>
+      </button>
       <div id="idioms_search_wrap">
         <span class="material-symbols-outlined">search</span>
         <input type="text" id="idioms_search" placeholder="Redewendung oder Bedeutung suchen\u2026" autocomplete="off" />
