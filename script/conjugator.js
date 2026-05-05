@@ -12,6 +12,7 @@ import {
   setCurrentData,
   addSavedVerb,
   isSaved,
+  getSavedCount,
 } from "/script/state.js";
 import { saveVerb } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
@@ -120,6 +121,16 @@ function renderError(verb) {
   container.appendChild(errDiv);
 }
 
+function showSaveToast() {
+  const count = getSavedCount();
+  const toast = document.getElementById("save_toast");
+  if (!toast) return;
+  const label = count === 1 ? "Karte" : "Karten";
+  toast.textContent = `Gespeichert — ${count} ${label} in deiner Liste`;
+  toast.classList.add("visible");
+  setTimeout(() => toast.classList.remove("visible"), 2500);
+}
+
 function attachSaveHandlers(verb, indicative) {
   document.querySelectorAll(".card_save_btn").forEach((btn) => {
     if (btn.classList.contains("saved")) return;
@@ -132,6 +143,7 @@ function attachSaveHandlers(verb, indicative) {
       if (added) {
         saveVerb(verb, tense, conjugations);
         counter();
+        showSaveToast();
         btn.classList.add("saved");
         btn.innerHTML = '<span class="material-symbols-outlined">check</span> Gespeichert';
       } else {

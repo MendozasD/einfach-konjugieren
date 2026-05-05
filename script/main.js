@@ -84,6 +84,7 @@ document.querySelector("#app").innerHTML = `
       <div id="idioms_grid"></div>
     </div>
 
+    <div id="save_toast"></div>
     <footer id="made_by">
       <span>Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></span>
       <span class="footer_links"><a href="/impressum.html">Impressum</a> \u00b7 <a href="/datenschutz.html">Datenschutz</a></span>

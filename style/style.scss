@@ -800,6 +800,33 @@
 
 
 // ======================================================
+// ================= SAVE TOAST =========================
+// ======================================================
+
+#save_toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--green);
+  color: black;
+  font-family: var(--panchang);
+  font-size: 0.75rem;
+  padding: 6px 20px;
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 300ms ease;
+  z-index: 200;
+  white-space: nowrap;
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// ======================================================
 // ================= REDEWENDUNGEN SECTION ==============
 // ======================================================
 
