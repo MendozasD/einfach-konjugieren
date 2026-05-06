@@ -80,7 +80,7 @@ function drawWallpaper(canvas, verbs, pageNum, totalPages) {
   ctx.fillStyle = SUBTLE_COLOR;
   ctx.font = "22px Satoshi, sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText("konjugieren.aydavid.uk", WIDTH / 2, HEIGHT - 60);
+  ctx.fillText("konjugieren.davidmendoza.ch", WIDTH / 2, HEIGHT - 60);
 }
 
 export async function generateWallpaper() {

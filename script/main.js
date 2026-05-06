@@ -12,7 +12,7 @@ document.querySelector("#app").innerHTML = `
     <div id="conjugator">
       <h1 class="title">Einfach Konjugieren</h1>
       <section id="input_field">
-        <input type="text" id="verb_input" placeholder="Wort eingeben" autocomplete="off" />
+        <input type="text" id="verb_input" placeholder="Wort eingeben" autocomplete="off" maxlength="100" />
         <span id="kbd_hint">Enter \u21b5</span>
         <span id="search_btn" class="material-symbols-outlined">
           arrow_circle_right
