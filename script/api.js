@@ -124,7 +124,8 @@ export function getIndicativeTenses(data) {
     if (data[tense]) {
       result[tense] = {};
       for (const person of PERSON_ORDER) {
-        result[tense][person] = formatConjugation(data[tense][person]);
+        const val = data[tense][person];
+        result[tense][person] = val != null ? formatConjugation(val) : null;
       }
     }
   }

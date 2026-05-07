@@ -52,7 +52,7 @@ function buildTenseCard(verb, tense, indicative) {
 
     const conj = document.createElement("p");
     conj.className = "conjugated_column";
-    conj.textContent = indicative[tense][p];
+    conj.textContent = indicative[tense][p] ?? —;
     row.appendChild(conj);
 
     card.appendChild(row);
