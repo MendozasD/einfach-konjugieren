@@ -6,6 +6,7 @@ import { getSavedVerbs, clearAllSavedVerbs } from "/script/state.js";
 import { restoreSavedVerbs, renderEmptyState } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
 import { initIdioms } from "/script/idioms.js";
+import { initThemeToggle } from "/script/theme.js";
 
 document.querySelector("#app").innerHTML = `
   <div id="container">
@@ -85,6 +86,9 @@ document.querySelector("#app").innerHTML = `
     </div>
 
     <div id="save_toast"></div>
+    <button id="theme_toggle" class="theme_toggle_btn" aria-label="Hellmodus">
+      <span class="material-symbols-outlined">light_mode</span>
+    </button>
     <footer id="made_by">
       <span>Made by <a href="https://davidmendoza.ch" target="_blank">David Mendoza</a></span>
       <span class="footer_links"><a href="/impressum.html">Impressum</a> \u00b7 <a href="/datenschutz.html">Datenschutz</a></span>
@@ -127,6 +131,7 @@ if (saved.length > 0) {
   restoreSavedVerbs(saved);
 }
 counter();
+initThemeToggle();
 
 // Check URL for ?verb= parameter
 const urlVerb = new URLSearchParams(window.location.search).get("verb");

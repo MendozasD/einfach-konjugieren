@@ -1092,6 +1092,33 @@
 }
 
 
+.theme_toggle_btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: background 0.2s, color 0.2s;
+
+  .material-symbols-outlined {
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    background: var(--bg-chip);
+    color: var(--text-primary);
+  }
+}
+
 [data-theme="light"] {
   --bg-primary: #f5f3ef;
   --bg-surface: #edeae4;
