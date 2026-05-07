@@ -62,6 +62,27 @@ def extract_auxiliary(forms):
     return "haben"  # default fallback
 
 
+def extract_translations(entry, max_glosses=3):
+    """Extract up to max_glosses English glosses, skipping inflections and auxiliary senses."""
+    results = []
+    for sense in entry.get("senses", []):
+        tags = set(sense.get("tags", []))
+        if "auxiliary" in tags:
+            continue
+        glosses = sense.get("glosses", [])
+        if not glosses:
+            continue
+        g = glosses[0].strip()
+        if not g:
+            continue
+        if g.startswith(("inflection of", "Alternative", "Obsolete", "misspelling")):
+            continue
+        results.append(g)
+        if len(results) >= max_glosses:
+            break
+    return results
+
+
 def extract_tenses(forms):
     """Extract the 6 indicative tenses from forms."""
     tenses = defaultdict(dict)
@@ -229,10 +250,13 @@ def process_verb(entry):
     if "PRASENS" not in tenses:
         return None
 
-    return {
-        "auxiliary": auxiliary,
-        "tenses": tenses,
-    }
+    result = {"auxiliary": auxiliary, "tenses": tenses}
+    # Only extract translations for single-word verbs; multi-word have idioms.json
+    if " " not in word:
+        translations = extract_translations(entry)
+        if translations:
+            result["translations"] = {"en": translations}
+    return result
 
 
 def main():
