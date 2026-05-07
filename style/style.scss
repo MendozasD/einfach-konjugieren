@@ -9,13 +9,12 @@
   --bg-primary: #242424;
   --bg-surface: #333333;
   --bg-card-muted: rgba(255, 255, 255, 0.03);
+  --bg-chip: rgba(255, 255, 255, 0.12);
 
   /* Text */
   --text-primary: rgba(255, 255, 255, 0.87);
   --text-strong: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.55);
-  --text-medium: rgba(255, 255, 255, 0.60);
-  --text-semi: rgba(255, 255, 255, 0.50);
   --text-muted: rgba(255, 255, 255, 0.45);
   --text-faint: rgba(255, 255, 255, 0.35);
   --text-placeholder: rgba(255, 255, 255, 0.30);
@@ -667,7 +666,7 @@
       border-radius: 20px;
       border: 1px solid var(--border-subtle);
       background: transparent;
-      color: var(--text-medium);
+      color: var(--text-secondary);
       white-space: nowrap;
       transition: all 200ms ease;
 
@@ -879,8 +878,8 @@
 .idioms_count_badge {
   font-family: var(--panchang);
   font-size: 0.55rem;
-  background: var(--bg-card-muted);
-  color: var(--text-semi);
+  background: var(--bg-chip);
+  color: var(--text-muted);
   padding: 2px 10px;
   border-radius: 12px;
   vertical-align: middle;
