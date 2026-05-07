@@ -1091,3 +1091,27 @@
   pointer-events: none;
 }
 
+
+[data-theme="light"] {
+  --bg-primary: #f5f3ef;
+  --bg-surface: #edeae4;
+  --bg-card-muted: rgba(0, 0, 0, 0.04);
+  --bg-chip: rgba(0, 0, 0, 0.08);
+  --text-primary: rgba(0, 0, 0, 0.87);
+  --text-strong: #111111;
+  --text-secondary: rgba(0, 0, 0, 0.55);
+  --text-muted: rgba(0, 0, 0, 0.45);
+  --text-faint: rgba(0, 0, 0, 0.35);
+  --text-placeholder: rgba(0, 0, 0, 0.30);
+  --border-strong: rgba(0, 0, 0, 0.50);
+  --border-subtle: rgba(0, 0, 0, 0.15);
+  --border-faint: rgba(0, 0, 0, 0.10);
+  --border-input: rgba(0, 0, 0, 0.15);
+  --border-loading: rgba(0, 0, 0, 0.15);
+  --divider-color: rgba(0, 0, 0, 0.12);
+  --glow-subtle: rgba(0, 0, 0, 0.08);
+
+  #autocomplete_list { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
+  .enlisted_verb { background: var(--bg-surface); }
+  .idiom_card { background: var(--bg-surface); }
+}
