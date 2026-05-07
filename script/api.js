@@ -133,5 +133,5 @@ export function getIndicativeTenses(data) {
 export function getTranslations(data) {
   const glosses = data?.translations?.en;
   if (!Array.isArray(glosses) || glosses.length === 0) return null;
-  return glosses.slice(0, 2).join(" · ");
+  return glosses.filter(g => typeof g === "string" && g.length > 0).slice(0, 2).join(" · ") || null;
 }
