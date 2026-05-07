@@ -314,6 +314,15 @@
   }
 }
 
+.verb_translations {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 6px auto 0;
+  max-width: 560px;
+  letter-spacing: 0.01em;
+  font-style: italic;
+}
+
 // ======================================================
 // ================= VERB ACTIONS =======================
 // ======================================================

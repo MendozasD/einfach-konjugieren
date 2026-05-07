@@ -1,6 +1,7 @@
 import {
   fetchAllTenses,
   getIndicativeTenses,
+  getTranslations,
   INDICATIVE_TENSES,
   TENSE_LABELS,
   PERSON_ORDER,
@@ -73,7 +74,7 @@ function buildTenseCard(verb, tense, indicative) {
   return card;
 }
 
-function renderAllTenses(verb, indicative) {
+function renderAllTenses(verb, indicative, fullData) {
   const fragment = document.createDocumentFragment();
 
   // Verb header
@@ -84,6 +85,14 @@ function renderAllTenses(verb, indicative) {
   const h1 = document.createElement("h1");
   h1.textContent = verb;
   verbHeader.appendChild(h1);
+
+  const translationText = getTranslations(fullData);
+  if (translationText) {
+    const translEl = document.createElement("p");
+    translEl.className = "verb_translations";
+    translEl.textContent = translationText;
+    verbHeader.appendChild(translEl);
+  }
 
   h1.classList.add("verb_pill_clickable");
   h1.title = "Neue Suche";
@@ -207,7 +216,7 @@ export async function conjugator(inputVerb) {
     const indicative = getIndicativeTenses(data);
     const container = document.querySelector("#conjugator_result");
     container.innerHTML = "";
-    container.appendChild(renderAllTenses(inputVerb, indicative));
+    container.appendChild(renderAllTenses(inputVerb, indicative, data));
     attachSaveHandlers(inputVerb, indicative);
     attachShareHandler(inputVerb);
 

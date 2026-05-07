@@ -130,3 +130,8 @@ export function getIndicativeTenses(data) {
   }
   return result;
 }
+export function getTranslations(data) {
+  const glosses = data?.translations?.en;
+  if (!Array.isArray(glosses) || glosses.length === 0) return null;
+  return glosses.slice(0, 2).join(" · ");
+}
