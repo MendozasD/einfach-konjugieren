@@ -1,7 +1,7 @@
 import "animate.css";
 import "/style/style.scss";
 import { conjugator } from "/script/conjugator.js";
-import { fetchVerbList, getRandomVerb } from "/script/api.js";
+import { fetchVerbList, getRandomVerb, fetchRandomPool } from "/script/api.js";
 import { getSavedVerbs, clearAllSavedVerbs } from "/script/state.js";
 import { restoreSavedVerbs, renderEmptyState } from "/script/save_verb.js";
 import { counter } from "/script/counter.js";
@@ -116,11 +116,12 @@ const conjugatedList = document.getElementById("conjugated_list");
 const randomVerbBtn = document.getElementById("random_verb_btn");
 const kbdHint = document.getElementById("kbd_hint");
 
-// Preload verb list for autocomplete
+// Preload verb list for autocomplete and random pool
 let verbList = [];
 fetchVerbList().then((list) => {
   verbList = list;
 });
+fetchRandomPool();
 
 // Initialize idioms section
 initIdioms();
