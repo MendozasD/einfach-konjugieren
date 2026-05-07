@@ -69,6 +69,8 @@ def extract_translations(entry, max_glosses=3):
         tags = set(sense.get("tags", []))
         if "auxiliary" in tags:
             continue
+        if "form-of" in tags:
+            continue
         glosses = sense.get("glosses", [])
         if not glosses:
             continue
