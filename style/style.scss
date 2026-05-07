@@ -1094,7 +1094,7 @@
 
 .theme_toggle_btn {
   position: fixed;
-  bottom: 1.5rem;
+  bottom: 5rem;
   right: 1.5rem;
   width: 2.5rem;
   height: 2.5rem;
@@ -1107,7 +1107,7 @@
   justify-content: center;
   cursor: pointer;
   z-index: 100;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 
   .material-symbols-outlined {
     font-size: 1.2rem;
@@ -1116,6 +1116,11 @@
   &:hover {
     background: var(--bg-chip);
     color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
   }
 }
 
