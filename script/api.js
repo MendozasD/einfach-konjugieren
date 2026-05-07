@@ -65,8 +65,44 @@ export async function fetchVerbList() {
 }
 
 export function getRandomVerb() {
-  if (!verbListCache || verbListCache.length === 0) return null;
-  return verbListCache[Math.floor(Math.random() * verbListCache.length)];
+  const pool = (randomPoolCache && randomPoolCache.length > 0)
+    ? randomPoolCache
+    : verbListCache;
+  if (!pool || pool.length === 0) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+const RANDOM_POOL_KEY = "einfach_random_pool_v1";
+const RANDOM_POOL_TTL = 7 * 24 * 60 * 60 * 1000;
+let randomPoolCache = null;
+
+export async function fetchRandomPool() {
+  if (randomPoolCache) return randomPoolCache;
+
+  try {
+    const stored = localStorage.getItem(RANDOM_POOL_KEY);
+    if (stored) {
+      const { data, ts } = JSON.parse(stored);
+      if (Date.now() - ts < RANDOM_POOL_TTL) {
+        randomPoolCache = data;
+        return randomPoolCache;
+      }
+    }
+  } catch { /* ignore */ }
+
+  try {
+    const res = await fetch("/api/german-verbs-api/random-pool");
+    if (!res.ok) return [];
+    const json = await res.json();
+    randomPoolCache = json.data || [];
+    localStorage.setItem(
+      RANDOM_POOL_KEY,
+      JSON.stringify({ data: randomPoolCache, ts: Date.now() })
+    );
+    return randomPoolCache;
+  } catch {
+    return [];
+  }
 }
 
 // Idiom list (multi-word verbs with glosses)
