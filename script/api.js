@@ -64,6 +64,10 @@ export async function fetchVerbList() {
   }
 }
 
+const RANDOM_POOL_KEY = "einfach_random_pool_v1";
+const RANDOM_POOL_TTL = 7 * 24 * 60 * 60 * 1000;
+let randomPoolCache = null;
+
 export function getRandomVerb() {
   const pool = (randomPoolCache && randomPoolCache.length > 0)
     ? randomPoolCache
@@ -71,10 +75,6 @@ export function getRandomVerb() {
   if (!pool || pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 }
-
-const RANDOM_POOL_KEY = "einfach_random_pool_v1";
-const RANDOM_POOL_TTL = 7 * 24 * 60 * 60 * 1000;
-let randomPoolCache = null;
 
 export async function fetchRandomPool() {
   if (randomPoolCache) return randomPoolCache;
