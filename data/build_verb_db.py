@@ -251,6 +251,11 @@ def process_verb(entry):
         return None
 
     result = {"auxiliary": auxiliary, "tenses": tenses}
+    # Flag archaic spelling variants (all senses are alt-of entries)
+    # Use alt-of tag only - not archaic, which would incorrectly flag real verbs like klimmen
+    usable_senses = [s for s in entry.get("senses", []) if s.get("glosses")]
+    if usable_senses and all("alt-of" in set(s.get("tags", [])) for s in usable_senses):
+        result["variant_only"] = True
     # Only extract translations for single-word verbs; multi-word have idioms.json
     if " " not in word:
         translations = extract_translations(entry)
@@ -302,12 +307,19 @@ def main():
                 skipped += 1
                 continue
 
-            # If verb already exists (multiple senses), merge/keep the one with more tenses
+            # If verb already exists (multiple senses), merge/keep best entry
             if word in verbs:
-                existing_tense_count = sum(len(v) for v in verbs[word]["tenses"].values())
-                new_tense_count = sum(len(v) for v in result["tenses"].values())
-                if new_tense_count <= existing_tense_count:
-                    continue
+                existing = verbs[word]
+                # Non-variant always displaces variant regardless of tense count
+                if existing.get("variant_only") and not result.get("variant_only"):
+                    pass  # new non-variant entry wins unconditionally
+                elif result.get("variant_only") and not existing.get("variant_only"):
+                    continue  # keep existing non-variant
+                else:
+                    existing_tense_count = sum(len(v) for v in existing["tenses"].values())
+                    new_tense_count = sum(len(v) for v in result["tenses"].values())
+                    if new_tense_count <= existing_tense_count:
+                        continue
 
             verbs[word] = result
 
