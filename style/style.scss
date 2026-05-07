@@ -1,13 +1,39 @@
 :root {
+  /* Brand */
   --panchang: "Panchang", sans-serif;
   --orange: #ff5c36;
   --red: #ff2c55;
   --green: #89fc00;
+
+  /* Surfaces */
+  --bg-primary: #242424;
+  --bg-surface: #333333;
+  --bg-card-muted: rgba(255, 255, 255, 0.03);
+
+  /* Text */
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-strong: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --text-faint: rgba(255, 255, 255, 0.35);
+  --text-placeholder: rgba(255, 255, 255, 0.30);
+
+  /* Borders */
+  --border-strong: #ffffff;
+  --border-subtle: rgba(255, 255, 255, 0.30);
+  --border-faint: rgba(255, 255, 255, 0.12);
+  --border-input: rgba(255, 255, 255, 0.12);
+  --border-loading: rgba(255, 255, 255, 0.15);
+  --divider-color: rgba(255, 255, 255, 0.20);
+
+  /* Glows */
+  --glow-subtle: rgba(255, 255, 255, 0.15);
+
   font-family: "Satoshi", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -216,7 +242,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: #333;
+  background: var(--bg-surface);
   border-radius: 0 0 12px 12px;
   list-style: none;
   padding: 0;
@@ -483,7 +509,7 @@
   gap: 2px;
   text-decoration: none;
   color: white;
-  background: #242424;
+  background: var(--bg-primary);
   padding: 8px 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 30px;
@@ -730,7 +756,7 @@
   height: 3rem;
   border-radius: 50%;
   border: 1px solid white;
-  background: #242424;
+  background: var(--bg-primary);
   color: white;
   font-family: var(--panchang);
   font-size: 1.3rem;
@@ -864,7 +890,7 @@
   gap: 8px;
   max-width: 460px;
   margin: 1.2rem auto 1.5rem;
-  background: #333;
+  background: var(--bg-surface);
   border-radius: 14px;
   padding: 0 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
