@@ -67,9 +67,7 @@ def extract_translations(entry, max_glosses=3):
     results = []
     for sense in entry.get("senses", []):
         tags = set(sense.get("tags", []))
-        if "auxiliary" in tags:
-            continue
-        if "form-of" in tags:
+        if tags & {"auxiliary", "form-of", "alt-of", "obsolete", "archaic"}:
             continue
         glosses = sense.get("glosses", [])
         if not glosses:
@@ -77,7 +75,7 @@ def extract_translations(entry, max_glosses=3):
         g = glosses[0].strip()
         if not g:
             continue
-        if g.startswith(("inflection of", "Alternative", "Obsolete", "misspelling")):
+        if g.lower().startswith(("inflection of", "alternative", "obsolete", "misspelling", "archaic")):
             continue
         results.append(g)
         if len(results) >= max_glosses:
@@ -338,9 +336,12 @@ def main():
 def extract_best_gloss(entry):
     """Extract the first useful English gloss from a kaikki entry."""
     for sense in entry.get("senses", []):
+        tags = set(sense.get("tags", []))
+        if tags & {"alt-of", "obsolete", "archaic"}:
+            continue
         glosses = sense.get("glosses", [])
         for g in glosses:
-            if g and not g.startswith("Alternative") and not g.startswith("Obsolete"):
+            if g and not g.lower().startswith(("alternative", "obsolete", "archaic", "inflection of", "misspelling")):
                 return g
     return None
 
