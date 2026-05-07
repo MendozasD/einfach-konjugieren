@@ -1,8 +1,11 @@
 const STORAGE_KEY = "ek_theme";
-const DEFAULT = "dark";
+
+function systemTheme() {
+  try { return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"; } catch { return "dark"; }
+}
 
 export function getStoredTheme() {
-  try { return localStorage.getItem(STORAGE_KEY) || DEFAULT; } catch { return DEFAULT; }
+  try { return localStorage.getItem(STORAGE_KEY) || systemTheme(); } catch { return "dark"; }
 }
 
 export function applyTheme(theme) {
@@ -19,7 +22,7 @@ export function initThemeToggle() {
   const btn = document.getElementById("theme_toggle");
   if (!btn) return;
   btn.addEventListener("click", () => {
-    const current = document.documentElement.getAttribute("data-theme") || DEFAULT;
+    const current = document.documentElement.getAttribute("data-theme") || systemTheme();
     const next = current === "light" ? "dark" : "light";
     try { localStorage.setItem(STORAGE_KEY, next); } catch {}
     applyTheme(next);
