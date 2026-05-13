@@ -29,6 +29,7 @@
 
   /* Glows */
   --glow-subtle: rgba(255, 255, 255, 0.15);
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.40);
 
   font-family: "Satoshi", sans-serif;
   line-height: 1.5;
@@ -187,7 +188,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 0.7rem;
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--text-placeholder);
   font-family: var(--panchang);
   pointer-events: none;
   opacity: 0;
@@ -263,7 +264,7 @@
   max-height: 280px;
   overflow-y: auto;
   z-index: 100;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-overlay);
 
   &.visible {
     display: block;
@@ -1152,8 +1153,7 @@
   --border-loading: rgba(0, 0, 0, 0.15);
   --divider-color: rgba(0, 0, 0, 0.12);
   --glow-subtle: rgba(0, 0, 0, 0.08);
-
-  #autocomplete_list { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.15);
   .enlisted_verb { background: var(--bg-surface); }
   .idiom_card { background: var(--bg-surface); }
   .card_save_btn { background: var(--bg-surface); }
